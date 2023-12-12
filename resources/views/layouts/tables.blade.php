@@ -3,36 +3,7 @@ set_time_limit(0);
 ?>
 
 @include('layouts.header')
-<div class="container-fluid">
 
-    <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Chart</h1>
-    <p class="mb-4">This is a data set that is already in the form of a diagram.
-    <!-- DataTales Example -->
-    <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary">DataTables</h6>
-      <div class="col-auto mt-2">
-         <a class="btn btn-danger" href="/database-export" >EXPORT EXCEL</a> 
-      </div>
-      @if (Session::has('success'))
-    <div class="alert alert-success alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        {{ Session::get('success') }}
-    </div>
-    @endif
-    
-    @if (Session::has('error'))
-    <div class="alert alert-danger alert-dismissible">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        {{ Session::get('error') }}
-    </div>
-		@endif
-    
-      <div class="col-auto mt-3">
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        IMPORT EXCEL
-    </button>
-      </div>
 
       <!-- Button trigger modal -->
 
@@ -62,10 +33,54 @@ set_time_limit(0);
 </div>
 
 
+{{-- <div class="card shadow mb-4">
+  <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Area Chart</h6> 
   </div>
+  <div class="card-body">
+      <div class="chart-area">
+          <canvas id="myAreaChart"></canvas>
+      </div>
+      <hr>
+      Styling for the area chart can be found in the
+      <code>/js/demo/chart-area-demo.js</code> file.
+  </div>
+</div> --}}
+<div class="container-fluid">
+    <h1 class="h3 mb-2 text-gray-800"><i class="fas fa-fw fa-chart-area"></i> Charts</h1>
+    <p class="mb-4">Chart.js is a third party plugin that is used to generate the charts in this theme.
+        The charts below have been customized - for further customization options, please visit the <a
+            target="_blank" href="https://www.chartjs.org/docs/latest/">official Chart.js
+            documentation</a>.</p>
     <div class="card shadow mb-4">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">DataTables</h6> 
+    </div>
       <div class="card-body">
-      
+       <div class="row mb-2 mt-1">
+            <div class="col-auto ">
+              <a class="btn btn-danger" href="{{ route('database.export') }}">EXPORT EXCEL</a>
+            </div>
+              @if (Session::has('success'))
+            <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ Session::get('success') }}
+            </div>
+            @endif
+            
+            @if (Session::has('error'))
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ Session::get('error') }}
+            </div>
+            @endif
+            
+              <div class="col-auto  ">
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                IMPORT EXCEL
+            </button>
+              </div>
+            </div>
         <div class="table-responsive">
             <table class="table table-bordered yajra-datatable" id="example" width="100%" cellspacing="0">
                 <thead class="thead-dark">                         
@@ -98,7 +113,6 @@ set_time_limit(0);
                       <th width="200px">Action</th>
                     </tr>
                   <tbody>
-          
             @foreach ($data as $item)
             <tr>
                 <td>{{ $item->id }}</td>
@@ -237,3 +251,4 @@ set_time_limit(0);
                 toastr.success("{{ Session::get('success') }}");
         </script>
               @endif
+

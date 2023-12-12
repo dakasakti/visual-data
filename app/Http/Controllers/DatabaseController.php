@@ -34,7 +34,6 @@ class DatabaseController extends Controller
                 "title" => "Home",
             ]);  
         }
-
         public function getDatabase(Request $request)
         {
             if ($request->ajax()) {
@@ -48,7 +47,6 @@ class DatabaseController extends Controller
                     ->rawColumns(['action'])
                     ->make(true);
             }
-        
     }
     public function tampilkandata($id){
         $data = Database::find($id);
@@ -85,7 +83,6 @@ class DatabaseController extends Controller
         Database::create($request->all());
         return redirect()->route('database')->with('succsess','Data Berhasil Ditambahkan');
      }
-
      public function diagram (){
         return view('database.diagram',[
             "title" => "Diagram",

@@ -1,52 +1,64 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\DatabaseController;
-use App\Http\Controllers\ExcelController;
+
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use Illuminate\Support\Facades\Redirect;
+use App\Http\Controllers\ExcelController;
+use App\Http\Controllers\DatabaseController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\DashboardController;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
 
 
+Route::get('/',[HomeController::class,'index']);
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
-require __DIR__.'/auth.php';
-
-
-Route::get('/database', [DatabaseController::class,'index'])->name('database');
+Route::get('/database', [DatabaseController::class, 'index'])->name('database');
 // untuk menampilkan data yang dipilih
-Route::get('/database/{id}', [DatabaseController::class,'show', "title" => "Home"])->name('show');
+Route::get('/database/{id}', [DatabaseController::class, 'show', "title" => "Home"])->name('show');
 // mengarahkan untuk menampilkan tampilan create
-Route::get('/tambahdata', [DatabaseController::class,'tambahdata'])->name('tambahdata');
-Route::get('/insertdata', [DatabaseController::class, 'insertdata'])->name('insertdata');
-// untuk menyimpan data ke db
-Route::post('/database', [DatabaseController::class,'store']);
-// untuk menampilkan view form data edit
-Route::get('/tampilkandata/{id}', [DatabaseController::class,'tampilkandata'])->name('tampilkandata');
-Route::post('/updatedata/{id}', [DatabaseController::class,'updatedata'])->name('updatedata');
-// mengupdate data ke db
-Route::put('/database/{id}', [DatabaseController::class,'update']);
-// mendelete data
-Route::get('/delete/{id}', [DatabaseController::class,'delete'])->name('delete');
-Route::get('/diagram', [DatabaseController::class,'diagram'])->name('diagram');
-//yajra datatable
-Route::get('database/list', [DatabaseController::class, 'getDatabase'])->name('ajax');
+Route::get('/tambahdata', [DatabaseController::class, 'tambahdata'])->name('tambahdata');
+Route::post('/insertdata', [DatabaseController::class, 'insertdata'])->name('insertdata');
 
-// Route::get('/exportexcel' , [ExcelController::class, 'exportexcel'])->name('exportexcel');
-// Route::post('/importexcel' , [ExcelController::class, 'importexcel'])->name('importexcel');
+// untuk menyimpan data ke db
+Route::post('/database', [DatabaseController::class, 'store']);
+// untuk menampilkan view form data edit
+Route::get('/tampilkandata/{id}', [DatabaseController::class, 'tampilkandata'])->name('tampilkandata');
+Route::post('/updatedata/{id}', [DatabaseController::class, 'updatedata'])->name('updatedata');
+// mengupdate data ke db
+Route::put('/database/{id}', [DatabaseController::class, 'update']);
+// mendelete data
+Route::get('/delete/{id}', [DatabaseController::class, 'delete'])->name('delete');
+Route::get('/diagram', [DatabaseController::class, 'diagram'])->name('diagram');
 
 Route::get('/database-export', [ExcelController::class, 'export'])->name('database.export');
-Route::post('/database-import', [ExcelController::class, 'import'])->name('database.import');
+Route::post('/database-Import', [ExcelController::class, 'import'])->name('database.import');
+
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login.show')->middleware('guest');
+Route::post('/login', [LoginController::class, 'authenticate'])->name('login');
+
+// Menampilkan formulir pendaftaran
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register.form');
+// Menangani pendaftaran
+Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 
 
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
+
+
+Route::get('/logout', function(){
+    Auth::logout();
+    return Redirect::to('home');
+ });

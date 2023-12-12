@@ -17,12 +17,9 @@
                 The charts below have been customized - for further customization options, please visit the <a
                     target="_blank" href="https://www.chartjs.org/docs/latest/">official Chart.js
                     documentation</a>.</p>
-
             <!-- Content Row -->
             <div class="row">
-
                 <div class="col-xl-8 col-lg-7">
-
                     <!-- Area Chart -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">

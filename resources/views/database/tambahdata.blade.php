@@ -18,13 +18,11 @@
                 <div class="card-body">
             <div class="row g-2">
                 <div class="col mb-2">
-                <label for="exampleInputEmail1" class="form-label">Tanggal</label>
-                    <div class="dates" style="color:#000000;">
-                            <input type="text" style="width:200px;background-color:#f9f9f9;" class="form-control" id="usr1" name="Tanggal" autocomplete="off" >
-                        </div>      
-                </div>
+                    <label for="datepicker">Choose a Date</label>
+                    <input type="text" id="datepicker" name="datepicker" class="form-control flatpickr" placeholder="Select date">
+                </div> 
                 <div class="col mb-2">
-                <label for="exampleInputEmail1"  class="form-label">ORG_CODE</label>
+                <label for="ORG_CODE"  class="form-label">ORG_CODE</label>
                 <select class="form-select"name="ORG_CODE"aria-label="Size 3 select example">
                     <option value="">--pilih--</option>
                     <option value="1">703010</option>
@@ -38,7 +36,7 @@
                 </div>
                 <div class="row g-2">
                 <div class="col mb-2">
-                    <label for="exampleInputEmail1" class="form-label">NAMA_CUSTOMER</label>
+                    <label for="NAMA_CUSTOMER" class="form-label">NAMA_CUSTOMER</label>
                             <select class="form-select"name="NAMA_CUSTOMER"aria-label="Size 3 select example">
                             {{-- <option selected="{{ $item->NAMA_CUSTOMER  }}"></option> --}}
                             <option value="">--pilih--</option>
@@ -192,23 +190,16 @@
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
             </div>
-
-            <script>
-
-                $(function() {
-
-                $('.dates #usr1').datepicker({
-                'format': 'yyyy-mm-dd',
-                'autoclose': true
-                });
-
-
-            });
-                </script>
-            
-            
             </form>
             @include('layouts.footer')
+
+            <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+            <script>
+                flatpickr("#datepicker", {
+                    dateFormat: "d/m/Y", // Atur format tanggal sesuai kebutuhan
+                });
+            </script>
+
 
             </div>
          </div>
