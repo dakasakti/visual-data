@@ -73,23 +73,13 @@ class DatabaseController extends Controller
         $data = Database::where('ORG_CODE',$id)->get();
         return response()->json($data);
      }
-     public function tambahdata(){
-        return view('database/tambahdata', [
-            "title" => "Create Data"
-        ]);
-     }
-     public function insertdata(Request $request){
-        // dd($request->all());
-        Database::create($request->all());
-        return redirect()->route('database')->with('succsess','Data Berhasil Ditambahkan');
-     }
      public function diagram (){
         return view('database.diagram',[
             "title" => "Diagram",
         ]);
      }
-
-
+     
+    
 
    
 }

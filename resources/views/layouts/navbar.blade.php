@@ -11,13 +11,13 @@
             </button>
 
             <!-- Topbar Search -->
-            <form
-                class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                 <div class="input-group">
-                    <input type="text" name="name" id="name" class="form-control" placeholder="Search Customer">
+                    <input type="text" name="name" id="name" class="form-control"
+                        placeholder="Search Customer">
                     <div id="customer_list">
                     </div>
-                        
+
                     <div class="input-group-append">
                         <button class="btn btn-primary" type="button">
                             <i class="fas fa-search fa-sm"></i>
@@ -40,8 +40,7 @@
                         <form class="form-inline mr-auto w-100 navbar-search">
                             <div class="input-group">
                                 <input type="text" class="form-control bg-light border-0 small"
-                                    placeholder="Search for..." aria-label="Search"
-                                    aria-describedby="basic-addon2">
+                                    placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
                                 <div class="input-group-append">
                                     <button class="btn btn-primary" type="button">
                                         <i class="fas fa-search fa-sm"></i>
@@ -153,7 +152,8 @@
                         </a>
                         <a class="dropdown-item d-flex align-items-center" href="#">
                             <div class="dropdown-list-image mr-3">
-                                <img class="rounded-circle" src="{{ asset('AdminLTE') }}/https://source.unsplash.com/Mv9hjnEUHR4/60x60">
+                                <img class="rounded-circle"
+                                    src="{{ asset('AdminLTE') }}/https://source.unsplash.com/Mv9hjnEUHR4/60x60">
                                 <div class="status-indicator bg-success"></div>
                             </div>
                             <div>
@@ -173,8 +173,7 @@
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <span class="mr-2 d-none d-lg-inline text-gray-600 small">Zuxxy</span>
-                        <img class="img-profile rounded-circle"
-                            src="{{ asset('images/download.jpg') }}">
+                        <img class="img-profile rounded-circle" src="{{ asset('images/download.jpg') }}">
                     </a>
                     <!-- Dropdown - User Information -->
                     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -192,7 +191,8 @@
                             Activity Log
                         </a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{ url('/logout') }}" data-toggle="modal" data-target="#logoutModal">
+                        <a class="dropdown-item" href="{{ url('/logout') }}" data-toggle="modal"
+                            data-target="#logoutModal">
                             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                             Logout
                         </a>
@@ -201,25 +201,27 @@
 
             </ul>
             <script>
-                $(document).ready(function(){
-                  $("#name").on('keyup',function(){
-                    var value = $(this).val();
-                    $.ajax ({
-                      url: {{ url('/database') }},
-                      type: "GET", 
-                      data:{'NAMA_CUSTOMER':value},
-                      success:function(data){
-                        $(#customer_list).html(data);
-                      }
+                $(document).ready(function() {
+                    $("#name").on('keyup', function() {
+                        var value = $(this).val();
+                        $.ajax({
+                            url: {{ url('/database') }},
+                            type: "GET",
+                            data: {
+                                'NAMA_CUSTOMER': value
+                            },
+                            success: function(data) {
+                                $(#customer_list).html(data);
+                            }
+                        });
                     });
-                  });
-                  $(document).on('click' ,'li',function(){
-                    var value = $(this).text;
-                    $("#name").val();
-                    $(#customer_list).html("");
-                  })
+                    $(document).on('click', 'li', function() {
+                        var value = $(this).text;
+                        $("#name").val();
+                        $(#customer_list).html("");
+                    })
                 })
-              </script>
+            </script>
 
         </nav>
         <!-- End of Topbar -->

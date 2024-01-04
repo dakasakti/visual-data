@@ -10,6 +10,7 @@ use App\Http\Controllers\DatabaseController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TambahDataController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,8 +30,8 @@ Route::get('/database', [DatabaseController::class, 'index'])->name('database');
 // untuk menampilkan data yang dipilih
 Route::get('/database/{id}', [DatabaseController::class, 'show', "title" => "Home"])->name('show');
 // mengarahkan untuk menampilkan tampilan create
-Route::get('/tambahdata', [DatabaseController::class, 'tambahdata'])->name('tambahdata');
-Route::post('/insertdata', [DatabaseController::class, 'insertdata'])->name('insertdata');
+Route::get('/tambahdata', [TambahDataController::class, 'tambahdata'])->name('tambahdata');
+Route::post('/insertdata', [TambahDataController::class, 'insertdata'])->name('insertdata');
 
 // untuk menyimpan data ke db
 Route::post('/database', [DatabaseController::class, 'store']);
