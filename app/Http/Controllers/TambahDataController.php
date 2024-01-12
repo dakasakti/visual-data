@@ -5,37 +5,50 @@ namespace App\Http\Controllers;
 use App\Models\Database;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Arr;
+
 
 class TambahDataController extends Controller
 {
 
+    public function tampilkanCreateForm()
+    {
+        $dropdownData = $this->tambahdata();
+
+        return view('database.tambahdata', [
+            'dropdownData' => $dropdownData,
+            'title' => 'Create Data',
+        ]);
+    }
 
 
     public function tambahdata()
     {
-        $data = Database::all();
-        $orgCodes = $this->getOrgCodes($data);
-    
-        return view('database.tambahdata', [
-            'data' => $data,
-            'orgCodes' => $orgCodes,
-            'title' => 'Create Data',
-        ]);
+        $dropdownData['ORG_CODE'] = Database::select('ORG_CODE')->distinct()->pluck('ORG_CODE', 'ORG_CODE');
+        $dropdownData['NAMA_CUSTOMER'] = Database::select('NAMA_CUSTOMER')->distinct()->pluck('NAMA_CUSTOMER', 'NAMA_CUSTOMER');
+        $dropdownData['KODE_PRODUK'] = Database::select('KODE_PRODUK')->distinct()->pluck('KODE_PRODUK', 'KODE_PRODUK');
+        $dropdownData['AMMOUNT'] = Database::select('AMMOUNT')->distinct()->pluck('AMMOUNT', 'AMMOUNT');
+        $dropdownData['HARGA_JUAL'] = Database::select('HARGA_JUAL')->distinct()->pluck('HARGA_JUAL', 'HARGA_JUAL');
+        $dropdownData['TRX'] = Database::select('TRX')->distinct()->pluck('TRX', 'TRX');
+        $dropdownData['TYPE_MITRA'] = Database::select('TYPE_MITRA')->distinct()->pluck('TYPE_MITRA', 'TYPE_MITRA');
+        $dropdownData['AMMOUNT_FIX'] = Database::select('AMMOUNT_FIX')->distinct()->pluck('AMMOUNT_FIX', 'AMMOUNT_FIX');
+        $dropdownData['PRODUK_FIX'] = Database::select('PRODUK_FIX')->distinct()->pluck('PRODUK_FIX', 'PRODUK_FIX');
+        $dropdownData['BUCKET_NAME'] = Database::select('BUCKET_NAME')->distinct()->pluck('BUCKET_NAME', 'BUCKET_NAME');
+        $dropdownData['Type_Produk'] = Database::select('Type_Produk')->distinct()->pluck('Type_Produk', 'Type_Produk');
+        $dropdownData['TYPE_BISNIS'] = Database::select('TYPE_BISNIS')->distinct()->pluck('TYPE_BISNIS', 'TYPE_BISNIS');
+        $dropdownData['REV_INPPN'] = Database::select('REV_INPPN')->distinct()->pluck('REV_INPPN', 'REV_INPPN');
+        $dropdownData['REV_EXPPN'] = Database::select('REV_EXPPN')->distinct()->pluck('REV_EXPPN', 'REV_EXPPN');
+        $dropdownData['PAJAK'] = Database::select('PAJAK')->distinct()->pluck('PAJAK', 'PAJAK');
+        $dropdownData['HPP'] = Database::select('HPP')->distinct()->pluck('HPP', 'HPP');
+        $dropdownData['TOTAL_HPP_INPPN'] = Database::select('TOTAL_HPP_INPPN')->distinct()->pluck('TOTAL_HPP_INPPN', 'TOTAL_HPP_INPPN');
+        $dropdownData['TOTAL_HPP_EXPPN'] = Database::select('TOTAL_HPP_EXPPN')->distinct()->pluck('TOTAL_HPP_EXPPN', 'TOTAL_HPP_EXPPN');
+        $dropdownData['MARGIN_INPPN'] = Database::select('MARGIN_INPPN')->distinct()->pluck('MARGIN_INPPN', 'MARGIN_INPPN');
+        $dropdownData['MARGIN_EXPPN'] = Database::select('MARGIN_EXPPN')->distinct()->pluck('MARGIN_EXPPN', 'MARGIN_EXPPN');
+        $dropdownData['Hari'] = Database::select('Hari')->distinct()->pluck('Hari', 'Hari');
+        $dropdownData['Bulan'] = Database::select('Bulan')->distinct()->pluck('Bulan', 'Bulan');
+        $dropdownData['KET_PROD'] = Database::select('KET_PROD')->distinct()->pluck('KET_PROD', 'KET_PROD');
+
+        return $dropdownData;
     }
-    
-    private function getOrgCodes()
-{
-    $orgColumns = ['ORG_CODE', 'NAMA_CUSTOMER', 'KODE_PRODUK', 'AMMOUNT', 'HARGA_JUAL', 'TRX', 'TYPE_MITRA', 'AMMOUNT_FIX', 'PRODUK_FIX', 'BUCKET_NAME', 'Type_Produk', 'TYPE_BISNIS', 'REV_INPPN', 'PAJAK', 'REV_EXPPN', 'HPP', 'TOTAL_HPP_INPPN', 'TOTAL_HPP_EXPPN', 'Margin_INPPN', 'Margin_EXPPN', 'Hari', 'Bulan', 'KET_PROD'];
-
-    $orgCodes = Database::pluck(...$orgColumns)->toArray();
-
-    return $orgCodes;
-}
-
-    
-
-
     public function insertdata(Request $request)
     {
         $request->validate([
@@ -63,8 +76,6 @@ class TambahDataController extends Controller
             'Hari'      => 'required',
             'Bulan' => 'required',
             'KET_PROD' => 'required',
-
-
         ]);
         Database::create($request->all());
         return redirect()->route('database')->with('succsess', 'Data Berhasil Ditambahkan');

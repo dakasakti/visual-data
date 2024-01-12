@@ -1,7 +1,5 @@
 @include('layouts.header')
 
-@include('layouts.script')
-
 @include('layouts.sidebar')
 
 @include('layouts.navbar')

@@ -1,7 +1,3 @@
-<?php
-set_time_limit(0);
-?>
-
 @include('layouts.header')
 
 
@@ -9,35 +5,15 @@ set_time_limit(0);
 
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Import Data</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="{{ route('database.import') }}" method="POST" enctype="multipart/form-data" accept=".xlsx">
-                @csrf
-                <div class="modal-body">
-                    <div class="form-group">
-                        <input type="file" name="excel_file" required>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-        </div>
-        </form>
-    </div>
-</div>
+
+@include('layouts.excel')
+
 
 <div class="container-fluid">
     <h1 class="h3 mb-2 text-gray-800"><i class="fas fa-fw fa-chart-area"></i> Charts</h1>
-    <p class="mb-4">Chart.js is a third party plugin that is used to generate the charts in this theme.
-        The charts below have been customized - for further customization options, please visit the <a target="_blank"
-            href="https://www.chartjs.org/docs/latest/">official Chart.js
-            documentation</a>.</p>
+    <div class="col-auto mb-4">
+        <a href="{{ url('/tambahdata') }}" class="btn btn-success">New</a>
+    </div>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">DataTables</h6>
@@ -47,6 +23,23 @@ set_time_limit(0);
                 <div class="col-auto ">
                     <a class="btn btn-danger" href="{{ route('database.export') }}">EXPORT EXCEL</a>
                 </div>
+                <div class="col-auto  ">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal">
+                        IMPORT EXCEL
+                    </button>
+                </div>
+                <div class="card-tools col-4">
+                    <form action="{{ url('search') }}" class="form-inline" method="GET">
+                        <div class="input-group-append">
+                            <input type="search" name="search" class="form-control float-end" placeholder="Cari...">
+                            <button type="submit" class="btn btn-default">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
                 @if (Session::has('success'))
                     <div class="alert alert-success alert-dismissible">
                         <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -61,12 +54,7 @@ set_time_limit(0);
                     </div>
                 @endif
 
-                <div class="col-auto  ">
-                    <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal">
-                        IMPORT EXCEL
-                    </button>
-                </div>
+
             </div>
             <div class="table-responsive">
                 <table class="table table-bordered yajra-datatable" id="example" width="100%" cellspacing="0">
@@ -141,140 +129,16 @@ set_time_limit(0);
                         @endforeach
                         </thead>
                 </table>
-                </table>
-                </table>
             </div>
             <div class="d-flex mt-3 justify-content-center">
                 {{ $data->links() }}
             </div>
         </div>
-
     </div>
-
 </div>
-<!-- /.container-fluid -->
-
-</div>
-<!-- End of Main Content -->
 
 
-<script>
-    new DataTable('#example');
-</script>
 
-<script type="text/javascript">
-    $(function() {
-
-        var table = $('.yajra-datatable').DataTable({
-            processing: true,
-            serverSide: true,
-            columns: [{
-                    data: 'Tanggal',
-                    name: 'Tanggal'
-                },
-                {
-                    data: 'ORG_CODE',
-                    name: 'ORG_CODE'
-                },
-                {
-                    data: 'NAMA_CUSTOMER',
-                    name: 'NAMA_CUSTOMER'
-                },
-                {
-                    data: 'KODE_PRODUK',
-                    name: 'KODE_PRODUK'
-                },
-                {
-                    data: 'AMMOUNT',
-                    name: 'AMMOUNT'
-                },
-                {
-                    data: 'HARGA_JUAL',
-                    name: 'HARGA_JUAL'
-                },
-                {
-                    data: 'TRX',
-                    name: 'TRX'
-                },
-                {
-                    data: 'TYPE_MITRA',
-                    name: 'TYPE_MITRA'
-                },
-                {
-                    data: 'AMMOUNT_FIX',
-                    name: 'AMMOUNT_FIX'
-                },
-                {
-                    data: 'PRODUK_FIX',
-                    name: 'PRODUK_FIX'
-                },
-                {
-                    data: 'BUCKET_NAME',
-                    name: 'BUCKET_NAME'
-                },
-                {
-                    data: 'Type_Produk',
-                    name: 'Type_Produk'
-                },
-                {
-                    data: 'TYPE_BISNIS',
-                    name: 'TYPE_BISNIS'
-                },
-                {
-                    data: 'REV_INPPN',
-                    name: 'REV_INPPN'
-                },
-                {
-                    data: 'PAJAK',
-                    name: 'PAJAK'
-                },
-                {
-                    data: 'REV_EXPPN',
-                    name: 'REV_EXPPN'
-                },
-                {
-                    data: 'HPP',
-                    name: 'HPP'
-                },
-                {
-                    data: 'TOTAL_HPP_INPPN',
-                    name: 'TOTAL_HPP_INPPN'
-                },
-                {
-                    data: 'TOTAL_HPP_EXPPN',
-                    name: 'TOTAL_HPP_EXPPN'
-                },
-                {
-                    data: 'Margin_INPPN',
-                    name: 'Margin_INPPN'
-                },
-                {
-                    data: 'Margin_EXPPN',
-                    name: 'Margin_EXPPN'
-                },
-                {
-                    data: 'Hari',
-                    name: 'Hari'
-                },
-                {
-                    data: 'Bulan',
-                    name: 'Bulan'
-                },
-                {
-                    data: 'KET_PROD',
-                    name: 'KET_PROD'
-                },
-                {
-                    data: 'action',
-                    name: 'action',
-                    orderable: true,
-                    searchable: true
-                },
-            ]
-        });
-
-    });
-</script>
 
 <script>
     $('.delete').click(function() {

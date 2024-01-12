@@ -1,15 +1,13 @@
 @include('layouts.header')
 @include('layouts.sidebar')
 
-
 <div class="container mt-4">
     <div class="d-flex justify-content-center">
-        <div class="card shadow mb-4"> 
+        <div class="card shadow mb-4">
             <div class="card-header py-3">
                 <h4 class="m-0 font-weight-bold text-primary">Create Data</h4>
             </div>
-            <form action="{{ url('/insertdata') }}" method="POST" enctype="multipart/form-data" onsubmit="return validateForm()">
-                <!-- ... -->
+            <form action="/insertdata" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="container mt-4">
                     <div class="card-body">
@@ -17,257 +15,285 @@
                             <!-- Kolom 1 -->
                             <div class="col-md-6">
                                 <label for="datepicker">Choose a Date</label>
-                                <input type="text" id="datepicker" name="datepicker" class="form-control flatpickr validate"
-                                    placeholder="Select date" required>
+                                <input type id="datepicker" name="datepicker" class="form-control flatpickr"
+                                    placeholder="Select date" autofocus>
                             </div>
                             <div class="col-md-6">
                                 <label for="ORG_CODE" class="form-label">ORG_CODE</label>
-                                <select class="form-control validate" name="ORG_CODE" aria-label="Size 3 select example"required required>
+                                <select class="form-select" name="ORG_CODE" id="ORG_CODE"
+                                    aria-label="Size 3 select example" required value="{{ old('ORG_CODE') }}">
                                     <option value="">--pilih--</option>
-                                    @foreach ($orgCodes as $item)
-                                        <option value="{{ $item['ORG_CODE'] }}">{{ $item['ORG_CODE'] }}</option>
+                                    @foreach ($dropdownData['ORG_CODE'] as $id => $ORG_CODE)
+                                        <option value="{{ $id }}">{{ $ORG_CODE }}</option>
                                     @endforeach
                                 </select>
                             </div>
+
 
                             <!-- Kolom 2 -->
                             <div class="col-md-6">
                                 <label for="NAMA_CUSTOMER" class="form-label">NAMA_CUSTOMER</label>
-                                <select class="form-control validate" name="NAMA_CUSTOMER" aria-label="Size 3 select example"requiredrequired>
+                                <select class="form-select" name="NAMA_CUSTOMER" id="NAMA_CUSTOMER"
+                                    aria-label="Size 3 select example" required value="{{ old('NAMA_CUSTOMER') }}">
                                     <option value="">--pilih--</option>
-                                    @foreach ($orgCodes as $item)
-                                        <option value="{{ $item['NAMA_CUSTOMER'] }}">{{ $item['NAMA_CUSTOMER'] }}
-                                        </option>
-                                    @endforeach
-                            </div>
-                            <div class="col-md-6">
-                                <label for="KODE_PRODUK" class="form-label">KODE_PRODUK</label>
-                                <select class="form-control validate" name="KODE_PRODUK" aria-label="Size 3 select example"required>
-                                    <option value="">--pilih--</option>
-                                    @foreach ($orgCodes as $item)
-                                        <option value="{{ $item['KODE_PRODUK'] }}">{{ $item['KODE_PRODUK'] }}</option>
+                                    @foreach ($dropdownData['NAMA_CUSTOMER'] as $id => $NAMA_CUSTOMER)
+                                        <option value="{{ $id }}">{{ $NAMA_CUSTOMER }}</option>
                                     @endforeach
                                 </select>
                             </div>
+                            <div class="col-md-6">
+                                <label class="form-label">KODE_PRODUK</label>
+                                <select class="form-select" name="KODE_PRODUK" id="KODE_PRODUK"
+                                    aria-label="Size 3 select example" required value="{{ old('KODE_PRODUK') }}">
+                                    <option value="">--pilih--</option>
+                                    @foreach ($dropdownData['KODE_PRODUK'] as $id => $KODE_PRODUK)
+                                        <option value="{{ $id }}">{{ $KODE_PRODUK }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
 
                             <!-- Kolom 3 -->
                             <div class="col-md-6">
                                 <label for="AMMOUNT" class="form-label">AMMOUNT</label>
-                                <select class="form-control validate" name="AMMOUNT" aria-label="Size 3 select example"required>
+                                <select class="form-select" name="AMMOUNT" id="AMMOUNT"
+                                    aria-label="Size 3 select example" required value="{{ old('AMMOUNT') }}">
                                     <option value="">--pilih--</option>
-                                    @foreach ($orgCodes as $item)
-                                        <option value="{{ $item['AMMOUNT'] }}">{{ $item['AMMOUNT'] }}</option>
+                                    @foreach ($dropdownData['AMMOUNT'] as $id => $AMMOUNT)
+                                        <option value="{{ $id }}">{{ $AMMOUNT }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label for="HARGA_JUAL" class="form-label">HARGA_JUAL</label>
-                                <select class="form-control validate" name="HARGA_JUAL" aria-label="Size 3 select example"required>
+                                <label for="exampleInputEmail1" class="form-label">HARGA_JUAL</label>
+                                <select class="form-select" name="HARGA_JUAL" id="HARGA_JUAL"
+                                    aria-label="Size 3 select example" required value="{{ old('HARGA_JUAL') }}">
                                     <option value="">--pilih--</option>
-                                    @foreach ($orgCodes as $item)
-                                        <option value="{{ $item['HARGA_JUAL'] }}">{{ $item['HARGA_JUAL'] }}</option>
+                                    @foreach ($dropdownData['HARGA_JUAL'] as $id => $HARGA_JUAL)
+                                        <option value="{{ $id }}">{{ $HARGA_JUAL }}</option>
                                     @endforeach
                                 </select>
                             </div>
+
 
                             <!-- Kolom 4 -->
                             <div class="col-md-6">
-                                <label for="TRX" class="form-label">TRX</label>
-                                <select class="form-control validate" name="TRX" aria-label="Size 3 select example"required>
+                                <label for="exampleInputEmail1" class="form-label">TRX</label>
+                                <select class="form-select" name="TRX" id="TRX"
+                                    aria-label="Size 3 select example" required value="{{ old('TRX') }}">
                                     <option value="">--pilih--</option>
-                                    @foreach ($orgCodes as $item)
-                                        <option value="{{ $item['TRX'] }}">{{ $item['TRX'] }}</option>
+                                    @foreach ($dropdownData['TRX'] as $id => $TRX)
+                                        <option value="{{ $id }}">{{ $TRX }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label for="TYPE_MITRA" class="form-label">TYPE_MITRA</label>
-                                <select class="form-control validate" name="TYPE_MITRA" aria-label="3 select example"required>
+                                <label for="exampleInputEmail1" class="form-label">TYPE_MITRA</label>
+                                <select class="form-select" name="TYPE_MITRA" id="TYPE_MITRA"
+                                    aria-label="3 select example" required value="{{ old('TYPE_MITRA') }}">
                                     <option value="">--pilih--</option>
-                                    @foreach ($orgCodes as $item)
-                                        <option value="{{ $item['TRX'] }}">{{ $item['TRX'] }}</option>
+                                    @foreach ($dropdownData['TYPE_MITRA'] as $id => $TYPE_MITRA)
+                                        <option value="{{ $id }}">{{ $TYPE_MITRA }}</option>
                                     @endforeach
                                 </select>
                             </div>
+
 
                             <!-- Kolom 5 -->
                             <div class="col-md-6">
-                                <label for="AMMOUNT_FIX" class="form-label">AMMOUNT_FIX</label>
-                                <select class="form-control validate" name="AMMOUNT_FIX" aria-label="3 select example"required>
+                                <label for="exampleInputEmail1" class="form-label">AMMOUNT_FIX</label>
+                                <select class="form-select" name="AMMOUNT_FIX" id="AMMOUNT_FIX"
+                                    aria-label="3 select example" required value="{{ old('AMMOUNT_FIX') }}">
                                     <option value="">--pilih--</option>
-                                    @foreach ($orgCodes as $item)
-                                        <option value="{{ $item['AMMOUNT_FIX'] }}">{{ $item['AMMOUNT_FIX'] }}</option>
+                                    @foreach ($dropdownData['AMMOUNT_FIX'] as $id => $AMMOUNT_FIX)
+                                        <option value="{{ $id }}">{{ $AMMOUNT_FIX }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label for="PRODUK_FIX" class="form-label">PRODUK_FIX</label>
-                                <select class="form-control validate" name="PRODUK_FIX" aria-label="3 select example"required>
+                                <label for="exampleInputEmail1" class="form-label">PRODUK_FIX</label>
+                                <select class="form-select" name="PRODUK_FIX" id="PRODUK_FIX"
+                                    aria-label="3 select example" required value="{{ old('PRODUK_FIX') }}">
                                     <option value="">--pilih--</option>
-                                    @foreach ($orgCodes as $item)
-                                        <option value="{{ $item['PRODUK_FIX'] }}">{{ $item['PRODUK_FIX'] }}</option>
+                                    @foreach ($dropdownData['PRODUK_FIX'] as $id => $PRODUK_FIX)
+                                        <option value="{{ $id }}">{{ $PRODUK_FIX }}</option>
                                     @endforeach
                                 </select>
                             </div>
 
+
                             <!-- Kolom 6 -->
                             <div class="col-md-6">
-                                <label for="BUCKET_NAME" class="form-label">BUCKET_NAME</label>
-                                <select class="form-control validate" name="BUCKET_NAME" aria-label="3 select example"required>
+                                <label for="exampleInputEmail1" class="form-label">BUCKET_NAME</label>
+                                <select class="form-select" name="BUCKET_NAME" id="BUCKET_NAME"
+                                    aria-label="3 select example" required value="{{ old('BUCKET_NAME') }}">
                                     <option value="">--pilih--</option>
-                                    @foreach ($orgCodes as $item)
-                                        <option value="{{ $item['BUCKET_NAME'] }}">{{ $item['BUCKET_NAME'] }}</option>
+                                    @foreach ($dropdownData['BUCKET_NAME']  as $id => $BUCKET_NAME)
+                                        <option value="{{ $id }}">{{ $BUCKET_NAME }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-md-6">Type_Produk
-                                <label for="Type_Produk" class="form-label">Type_Produk</label>
-                                <select class="form-control validate" name="Type_Produk" aria-label="3 select example"required>
+                                <label class="form-label">Type_Produk</label>
+                                <select class="form-select" name="Type_Produk" id="Type_Produk"
+                                    aria-label="3 select example" required value="{{ old('Type_Produk') }}">
                                     <option value="">--pilih--</option>
-                                    @foreach ($orgCodes as $item)
-                                        <option value="{{ $item['Type_Produk'] }}">{{ $item['Type_Produk'] }}
-                                        </option>
+                                    @foreach ($dropdownData['Type_Produk']  as $id => $Type_Produk)
+                                        <option value="{{ $id }}">{{ $Type_Produk }}</option>
                                     @endforeach
                                 </select>
                             </div>
+
 
                             <!-- Kolom 7 -->
                             <div class="col-md-6">
-                                <label for="TYPE_BISNIS" class="form-label">TYPE_BISNIS</label>
-                                <select class="form-control validate" name="TYPE_BISNIS" aria-label="3 select example"required>
+                                <label for="exampleInputEmail1" class="form-label">TYPE_BISNIS</label>
+                                <select class="form-select" name="TYPE_BISNIS" id="TYPE_BISNIS"
+                                    aria-label="3 select example" required value="{{ old('TYPE_BISNIS') }}">
                                     <option value="">--pilih--</option>
-                                    @foreach ($orgCodes as $item)
-                                        <option value="{{ $item['TYPE_BISNIS'] }}">{{ $item['TYPE_BISNIS'] }}
-                                        </option>
+                                    @foreach ($dropdownData['TYPE_BISNIS']  as $id => $TYPE_BISNIS)
+                                        <option value="{{ $id }}">{{ $TYPE_BISNIS }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label for="REV_INPPN" class="form-label">REV_INPPN</label>
-                                <select class="form-control validate" name="REV_INPPN" aria-label="3 select example"required>
+                                <label for="exampleInputEmail1" class="form-label">REV_INPPN</label>
+                                <select class="form-select" name="REV_INPPN" id="REV_INPPN"
+                                    aria-label="3 select example" required value="{{ old('REV_INPPN') }}">
                                     <option value="">--pilih--</option>
-                                    @foreach ($orgCodes as $item)
-                                        <option value="{{ $item['REV_INPPN'] }}">{{ $item['REV_INPPN'] }}</option>
+                                    @foreach ($dropdownData['REV_INPPN']  as $id => $REV_INPPN)
+                                        <option value="{{ $id }}">{{ $REV_INPPN }}</option>
                                     @endforeach
                                 </select>
                             </div>
+
 
                             <!-- Kolom 8 -->
                             <div class="col-md-6">
-                                <label for="REV_EXPPN" class="form-label">REV_EXPPN</label>
-                                <select class="form-control validate" name="REV_EXPPN" aria-label="3 select example"required>
+                                <label for="exampleInputEmail1" class="form-label">REV_EXPPN</label>
+                                <select class="form-select" name="REV_EXPPN" id="REV_EXPPN"
+                                    aria-label="3 select example" required value="{{ old('REV_EXPPN') }}">
                                     <option value="">--pilih--</option>
-                                    @foreach ($orgCodes as $item)
-                                        <option value="{{ $item['REV_EXPPN'] }}">{{ $item['REV_EXPPN'] }}</option>
+                                    @foreach ($dropdownData['REV_EXPPN']  as $id => $REV_EXPPN)
+                                        <option value="{{ $id }}">{{ $REV_EXPPN }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label for="PAJAK" class="form-label">PAJAK</label>
-                                <select class="form-control validate" name="PAJAK" aria-label="3 select example"required>
+                                <label for="exampleInputEmail1" class="form-label">PAJAK</label>
+                                <select class="form-select" name="PAJAK" id="PAJAK"
+                                    aria-label="3 select example" required value="{{ old('PAJAK') }}">
                                     <option value="">--pilih--</option>
-                                    @foreach ($orgCodes as $item)
-                                        <option value="{{ $item['PAJAK'] }}">{{ $item['PAJAK'] }}</option>
+                                    @foreach ($dropdownData['PAJAK']  as $id => $PAJAK)
+                                        <option value="{{ $id }}">{{ $PAJAK }}</option>
                                     @endforeach
                                 </select>
                             </div>
+
 
                             <!-- Kolom 9 -->
                             <div class="col-md-6">
-                                <label for="HPP" class="form-label">HPP</label>
-                                <select class="form-control validate" name="HPP" aria-label="3 select example"required>
+                                <label for="exampleInputEmail1" class="form-label">HPP</label>
+                                <select class="form-select" name="HPP" id="HPP"
+                                    aria-label="3 select example" required value="{{ old('HPP') }}">
                                     <option value="">--pilih--</option>
-                                    @foreach ($orgCodes as $item)
-                                        <option value="{{ $item['HPP'] }}">{{ $item['HPP'] }}</option>
+                                    @foreach ($dropdownData['HPP']  as $id => $HPP)
+                                        <option value="{{ $id }}">{{ $HPP }}</option>
                                     @endforeach
                                 </select>
                             </div>
                             <div class="col-md-6">
-                                <label for="TOTAL_HPP_INPPN" class="form-label">TOTAL_HPP_INPPN</label>
-                                <select class="form-control validate" name="TOTAL_HPP_INPPN" aria-label="3 select example"required>
+                                <label for="exampleInputEmail1" class="form-label">TOTAL_HPP_INPPN</label>
+                                <select class="form-select" name="TOTAL_HPP_INPPN" id="TOTAL_HPP_INPPN"
+                                    aria-label="3 select example" required value="{{ old('TOTAL_HPP_INPPN') }}">
                                     <option value="">--pilih--</option>
-                                    @foreach ($orgCodes as $item)
-                                        <option value="{{ $item['TOTAL_HPP_INPPN'] }}">{{ $item['TOTAL_HPP_INPPN'] }}
-                                        </option>
+                                    @foreach ($dropdownData['TOTAL_HPP_INPPN']  as $id => $TOTAL_HPP_INPPN)
+                                        <option value="{{ $id }}">{{ $TOTAL_HPP_INPPN }}</option>
                                     @endforeach
                                 </select>
                             </div>
+
 
                             <!-- Kolom 10 -->
                             <div class="col-md-6">
-                                <label for="TOTAL_HPP_EXPPN" class="form-label">TOTAL_HPP_EXPPN</label>
-                                <select class="form-control validate" name="TOTAL_HPP_EXPPN" aria-label="3 select example"required>
+                                <label for="exampleInputEmail1" class="form-label">TOTAL_HPP_EXPPN</label>
+                                <select class="form-select" name="TOTAL_HPP_EXPPN" id="TOTAL_HPP_EXPPN"
+                                    aria-label="3 select example" required value="{{ old('TOTAL_HPP_EXPPN') }}">
                                     <option value="">--pilih--</option>
-                                    @foreach ($orgCodes as $item)
-                                        <option value="{{ $item['TOTAL_HPP_EXPPN'] }}">{{ $item['TOTAL_HPP_EXPPN'] }}
-                                        </option>
+                                    @foreach ($dropdownData['TOTAL_HPP_EXPPN']  as $id => $TOTAL_HPP_EXPPN)
+                                        <option value="{{ $id }}">{{ $TOTAL_HPP_EXPPN }}</option>
                                     @endforeach
                                 </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="MARGIN_INPPN" class="form-label">MARGIN_INPPN</label>
-                                <select class="form-control validate" name="MARGIN_INPPN" aria-label="3 select example"required>
-                                    <option value="">--pilih--</option>
-                                    @foreach ($orgCodes as $item)
-                                        <option value="{{ $item['MARGIN_INPPN'] }}">{{ $item['MARGIN_INPPN'] }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                <div class="col-md-6">
+                                    <label for="exampleInputEmail1" class="form-label">MARGIN_INPPN</label>
+                                    <select class="form-select" name="MARGIN_INPPN" id="MARGIN_INPPN"
+                                        aria-label="3 select example" required value="{{ old('MARGIN_INPPN') }}">
+                                        <option value="">--pilih--</option>
+                                        @foreach ($dropdownData['MARGIN_INPPN']  as $id => $MARGIN_INPPN)
+                                            <option value="{{ $id }}">{{ $MARGIN_INPPN }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+
+                                <!-- Kolom 11 -->
+                                <div class="col-md-6">
+                                    <label for="exampleInputEmail1" class="form-label">MARGIN_EXPPN</label>
+                                    <select class="form-select" name="MARGIN_EXPPN" id="MARGIN_EXPPN"
+                                        aria-label="3 select example" required value="{{ old('MARGIN_EXPPN') }}">
+                                        <option value="">--pilih--</option>
+                                        @foreach ($dropdownData['MARGIN_EXPPN']  as $id => $MARGIN_EXPPN)
+                                            <option value="{{ $id }}">{{ $MARGIN_EXPPN }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="exampleInputEmail1" class="form-label">Hari</label>
+                                    <select class="form-select" name="Hari" id="Hari"
+                                        aria-label="3 select example" required value="{{ old('Hari') }}">
+                                        <option value="">--pilih--</option>
+                                        @foreach ($dropdownData['Hari']  as $id => $Hari)
+                                            <option value="{{ $id }}">{{ $Hari }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+
+
+                                <!-- Kolom 12 -->
+                                <div class="col-md-6">
+                                    <label for="exampleInputEmail1" class="form-label">Bulan</label>
+                                    <select class="form-select" name="Bulan" id="Bulan"
+                                        aria-label="3 select example" required value="{{ old('Bulan') }}">
+                                        <option value="">--pilih--</option>
+                                        @foreach ($dropdownData['Bulan']  as $id => $Bulan)
+                                            <option value="{{ $id }}">{{ $Bulan }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="exampleInputEmail1" class="form-label">KET_PROD</label>
+                                    <select class="form-select" name="KET_PROD" id="KET_PROD"
+                                        aria-label="3 select example" required value="{{ old('KET_PROD') }}">
+                                        <option value="">--pilih--</option>
+                                        @foreach ($dropdownData['KET_PROD']  as $id => $KET_PROD)
+                                            <option value="{{ $id }}">{{ $KET_PROD }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
 
-                            <!-- Kolom 11 -->
-                            <div class="col-md-6">
-                                <label for="MARGIN_EXPPN" class="form-label">MARGIN_EXPPN</label>
-                                <select class="form-control validate" name="MARGIN_EXPPN" aria-label="3 select example"required>
-                                    <option value="">--pilih--</option>
-                                    @foreach ($orgCodes as $item)
-                                        <option value="{{ $item['MARGIN_EXPPN'] }}">{{ $item['MARGIN_EXPPN'] }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="Hari" class="form-label">Hari</label>
-                                <select class="form-control validate" name="Hari" aria-label="3 select example"required>
-                                    <option value="">--pilih--</option>
-                                    @foreach ($orgCodes as $item)
-                                        <option value="{{ $item['Hari'] }}">{{ $item['Hari'] }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
 
-                            <!-- Kolom 12 -->
-                            <div class="col-md-6">
-                                <label for="Bulan" class="form-label">Bulan</label>
-                                <select class="form-control validate" name="Bulan" aria-label="3 select example"required>
-                                    <option value="">--pilih--</option>
-                                    @foreach ($orgCodes as $item)
-                                        <option value="{{ $item['Bulan'] }}">{{ $item['Bulan'] }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="KET_PROD" class="form-label">KET_PROD</label>
-                                <select class="form-control validate" name="KET_PROD" aria-label="3 select example"required>
-                                    <option value="">--pilih--</option>
-                                    @foreach ($orgCodes as $item)
-                                        <option value="{{ $item['KET_PROD'] }}">{{ $item['KET_PROD'] }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
+                            <!-- Lanjutkan dengan baris formulir lainnya -->
 
-                        <!-- Lanjutkan dengan baris formulir lainnya -->
 
-                        <div class="row mt-3">
-                            <div class="d-flex justify-content-center">
-                                <a class="btn btn-danger" href="{{ url('/database') }}"
-                                    enctype="multipart/form-data">Back</a>
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                            <div class="row mt-3">
+                                <div class="d-flex justify-content-center">
+                                    <a class="btn btn-danger" href="{{ url('/database') }}">Back</a>
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
             </form>
         </div>
     </div>
@@ -278,34 +304,15 @@
 
 @include('layouts.footer')
 
-
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 <script>
     flatpickr("#datepicker", {
         dateFormat: "d/m/Y",
     });
-
-    // $(".form-control.validate").select2({
-    //     tags: true
-    // });
-
-    $('.form-control.validate').select2({
-  ajax: {
-    url: 'https://api.github.com/search/repositories',
-    dataType: 'json'
-  }
-});
-
-    function validateForm() {
-        var elements = document.getElementsByClassName('validate');
-        for (var i = 0; i < elements.length; i++) {
-            if (elements[i].value.trim() === '') {
-                alert('Please fill in all required fields.');
-                return false;
-            }
-        }
-        return true;
-    }
 </script>
-
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+    $(".form-select").select2({
+        tags: true
+    });
+</script>

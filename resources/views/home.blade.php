@@ -1,5 +1,3 @@
-
-
 @extends('layouts.app')
 {{-- @extends('database.index') --}}
 {{-- @extends('DatabaseController') --}}
