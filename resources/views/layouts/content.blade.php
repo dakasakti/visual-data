@@ -4,10 +4,19 @@
       <!-- Main Content -->
       <div id="content">
 
-          <!-- Topbar -->
-
-          <!-- Begin Page Content -->
           <div class="container-fluid">
+            @if (Session::has('bisalogin'))
+            <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ Session::get('bisalogin') }}
+            </div>
+        @endif
+        @if (Session::has('guest'))
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ Session::get('guest') }}
+        </div>
+    @endif
 
               <!-- Page Heading -->
               <div class="d-sm-flex align-items-center justify-content-between mb-4">

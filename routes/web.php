@@ -9,6 +9,8 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\DatabaseController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TambahDataController;
+use App\Http\Controllers\UpdateContoller;
+use Illuminate\Queue\Connectors\DatabaseConnector;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,10 +22,6 @@ use App\Http\Controllers\TambahDataController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/test', function () {
-    return 'Test route is working!';
-});
 
 
 Route::get('/', [HomeController::class, 'index']);
@@ -40,12 +38,13 @@ Route::post('/insertdata', [TambahDataController::class, 'insertdata'])->name('i
 // untuk menyimpan data ke db
 Route::post('/database', [DatabaseController::class, 'store']);
 // untuk menampilkan view form data edit
-Route::get('/tampilkandata/{id}', [DatabaseController::class, 'tampilkandata'])->name('tampilkandata');
-Route::post('/updatedata/{id}', [DatabaseController::class, 'updatedata'])->name('updatedata');
+Route::get('/tampilkandata/{id}', [UpdateContoller::class, 'tampilkandata'])->name('tampilkandata');
+Route::post('/updatedata/{id}', [UpdateContoller::class, 'updatedata'])->name('updatedata');
 
 Route::put('/database/{id}', [DatabaseController::class, 'update']);
 
 Route::get('/delete/{id}', [DatabaseController::class, 'delete'])->name('delete');
+
 
 Route::get('/diagram', [DatabaseController::class, 'diagram'])->name('diagram');
 
@@ -55,9 +54,9 @@ Route::post('/database-Import', [ExcelController::class, 'import'])->name('datab
 Route::get('sesi', [SessionController::class, 'index'])->middleware('isGuest');
 Route::post('sesi/login', [SessionController::class, 'login'])->middleware('isGuest');
 Route::get('sesi/logout', [SessionController::class, 'logout']);
-Route::get('sesi/register', [SessionController::class, 'register'])->middleware('isGuest');
+Route::get('sesi/register', [SessionController::class,'register'])->name('register')->middleware('isGuest');
 Route::post('sesi/create', [SessionController::class, 'create'])->middleware('isGuest');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 
-Route::get('/database/search', [SearchController::class, 'search'])->name('search');
+Route::get('/filter-data', [DatabaseController::class, 'filter'])->name('filter');

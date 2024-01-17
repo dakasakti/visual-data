@@ -47,7 +47,7 @@
                                             @error('email')
                                             <div class="invalid-feedback">
                                                 {{ $message }}
-                                            </div>"
+                                            </div>
                                             @enderror
                                 </div>
                                     <div class="form-group">

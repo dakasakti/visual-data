@@ -7,18 +7,10 @@ use Illuminate\Http\Request;
 use App\Exports\DatabaseExport;
 use App\Imports\DatabaseImport;
 use App\Models\Database;
-use Illuminate\Support\Facades\Session;
-use Maatwebsite\Excel\Excel as ExcelExcel;
 use Maatwebsite\Excel\Facades\Excel;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class ExcelController extends Controller
 {
-    public function export()
-    {
-        return Excel::download(new DatabaseExport, 'data.xlsx');
-        // return Excel::download(new DatabaseExport, 'data.xlsx');
-    }
        
     /**
     * @return \Illuminate\Support\Collection
@@ -36,8 +28,17 @@ class ExcelController extends Controller
         } else {
             return redirect()->route('database-import')->with('error', 'Gagal mengimpor data. Pastikan Anda telah memilih file Excel.');
         }
+    }
+        
+    public function export(Request $request)
+    {
+        $data = Database::when($request->nama, function ($query) use ($request) {
+            return $query->where('NAMA_CUSTOMER', $request->nama);
+        })->get();
+
+        return Excel::download(new DatabaseExport($data), 'data.xlsx');
+    }
         
 
 
-}
 }

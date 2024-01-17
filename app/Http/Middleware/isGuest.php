@@ -18,7 +18,7 @@ class isGuest
     public function handle(Request $request, Closure $next)
     {
         if(Auth::check()){
-            return redirect('database')->with('guest','Kamu sudah login');
+            return redirect('/database')->with('guest','Kamu sudah login');
         }
         return $next($request);
     }

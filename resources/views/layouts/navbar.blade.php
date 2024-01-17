@@ -1,3 +1,4 @@
+@include('layouts.header')
 <div id="content-wrapper" class="d-flex flex-column">
 
     <!-- Main Content -->
@@ -10,7 +11,7 @@
                 <i class="fa fa-bars"></i>
             </button>
 
-           
+
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
                 <div class="topbar-divider d-none d-sm-block"></div>
@@ -19,8 +20,8 @@
                 <li class="nav-item dropdown no-arrow">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">Zuxxy</span>
-                        <img class="img-profile rounded-circle" src="{{ asset('images/download.jpg') }}">
+                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
+                        <img class="img-profile rounded-circle" src="{{ asset('images/Zuxxy.jpg') }}">
                     </a>
                     <!-- Dropdown - User Information -->
                     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -48,22 +49,28 @@
                         var value = $(this).val();
                         $.ajax({
                             url: {{ url('/database') }},
-                            type: "GET",
                             data: {
                                 'NAMA_CUSTOMER': value
                             },
                             success: function(data) {
-                                $(#customer_list).html(data);
+                                $("#customer_list").html(data);
                             }
                         });
                     });
                     $(document).on('click', 'li', function() {
-                        var value = $(this).text;
-                        $("#name").val();
-                        $(#customer_list).html("");
-                    })
-                })
+                        var value = $(this).text();
+                        $("#name").val(value);
+                        i
+                        $("#customer_list").html("");
+                    });
+                });
             </script>
-
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="..."></script>
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="..."></script>
+            <script>
+                $(document).ready(function() {
+                    $('.dropdown-toggle').dropdown();
+                });
+            </script>
         </nav>
         <!-- End of Topbar -->

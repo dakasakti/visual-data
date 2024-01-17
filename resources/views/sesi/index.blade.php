@@ -11,6 +11,12 @@
                         <div class="row justify-content-center">
                             <div class="col-lg-6">
                                 <div class="p-5">
+                                    @if (session()->has('logout'))
+                                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            {{ session('logout') }}
+                                            <button type="button" class="btn-close" aria-label="Close"></button>
+                                        </div>
+                                    @endif
                                     @if (session()->has('berhasil'))
                                         <div class="alert alert-success alert-dismissible fade show" role="alert">
                                             {{ session('berhasil') }}
@@ -43,16 +49,21 @@
                                     <form action="/sesi/login" method="POST" class="user" novalidate>
                                         @csrf
                                         <div class="form-group">
-                                            <label for="email">Email address</label>
-                                            <input type="email" name="email"
-                                                class="form-control form-control-user @error('email') is-invalid @enderror "
-                                                id="email" placeholder="name@example.com" autofocus required
-                                                value="{{ old('email') }}">
-                                            @error('email')
-                                                <div class="invalid-feedback">
-                                                    {{ $message }}
-                                                </div>
-                                            @enderror
+                                            <label for="email"></label>
+                                            <div class="form-group">
+                                                <label for="email">Email:</label>
+                                                <input type="email" name="email"
+                                                       class="form-control form-control-user @error('email') is-invalid @enderror"
+                                                       id="email" placeholder="name@example.com" autofocus required
+                                                       value="{{ old('email') }}">
+                                                
+                                                @error('email')
+                                                    <div class="invalid-feedback mt-2"> 
+                                                        {{ $message }}
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                            
                                         </div>
                                         <div class="form-group">
                                             <label for="password">Password</label>
