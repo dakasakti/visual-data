@@ -2,7 +2,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Import Data</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Import Data <h6> ( excel )</h6></h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="{{ route('database.import') }}" method="POST" enctype="multipart/form-data" accept=".xlsx">
@@ -16,7 +16,7 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Save changes</button>
                 </div>
+            </form>
         </div>
-        </form>
     </div>
 </div>

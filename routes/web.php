@@ -24,39 +24,45 @@ use Illuminate\Queue\Connectors\DatabaseConnector;
 */
 
 
-Route::get('/', [HomeController::class, 'index']);
+
+Route::middleware(['isLogin'])->group(function () {
+    Route::get('/', [HomeController::class, 'index']);
+    Route::post('/database', [DatabaseController::class, 'store']);
+    
+    Route::get('/database', [DatabaseController::class, 'index'])->name('database');
+    Route::get('/database/{id}', [DatabaseController::class, 'show', "title" => "Home"])->name('show');
+
+    // tambah data
+    Route::get('/tambahdata', [TambahDataController::class, 'tambahdata'])->name('tambahdata');
+    Route::get('/tampilkan-create-form', [TambahDataController::class, 'tampilkanCreateForm']);
+    Route::post('/insertdata', [TambahDataController::class, 'insertdata'])->name('insertdata');
 
 
-Route::get('/database', [DatabaseController::class, 'index'])->name('database')->middleware('isLogin');
-// untuk menampilkan data yang dipilih
-Route::get('/database/{id}', [DatabaseController::class, 'show', "title" => "Home"])->name('show');
-// mengarahkan untuk menampilkan tampilan create
-Route::get('/tambahdata', [TambahDataController::class, 'tambahdata'])->name('tambahdata');
-Route::get('/tampilkan-create-form', [TambahDataController::class, 'tampilkanCreateForm']);
-Route::post('/insertdata', [TambahDataController::class, 'insertdata'])->name('insertdata');
+    // untuk update
+    Route::get('/tampilkandata/{id}', [UpdateContoller::class, 'tampilkandata'])->name('tampilkandata');
+    Route::post('/updatedata/{id}', [UpdateContoller::class, 'updatedata'])->name('updatedata');
+    Route::put('/database/{id}', [DatabaseController::class, 'update']);
+    
+    Route::get('/database-export', [ExcelController::class, 'export'])->name('database.export');
+    Route::post('/database-Import', [ExcelController::class, 'import'])->name('database.import');
+    
 
-// untuk menyimpan data ke db
-Route::post('/database', [DatabaseController::class, 'store']);
-// untuk menampilkan view form data edit
-Route::get('/tampilkandata/{id}', [UpdateContoller::class, 'tampilkandata'])->name('tampilkandata');
-Route::post('/updatedata/{id}', [UpdateContoller::class, 'updatedata'])->name('updatedata');
+    Route::get('/delete/{id}', [DatabaseController::class, 'delete'])->name('delete');
 
-Route::put('/database/{id}', [DatabaseController::class, 'update']);
+    Route::get('/diagram', [DatabaseController::class, 'diagram'])->name('diagram');
 
-Route::get('/delete/{id}', [DatabaseController::class, 'delete'])->name('delete');
+});
 
 
-Route::get('/diagram', [DatabaseController::class, 'diagram'])->name('diagram');
+Route::middleware(['isGuest'])->group(function(){
 
-Route::get('/database-export', [ExcelController::class, 'export'])->name('database.export');
-Route::post('/database-Import', [ExcelController::class, 'import'])->name('database.import');
+    Route::get('sesi', [SessionController::class, 'index']);
+    Route::post('sesi/login', [SessionController::class, 'login']);
+    Route::get('sesi/logout', [SessionController::class, 'logout']);
+    Route::get('sesi/register', [SessionController::class, 'register'])->name('register');
+    Route::post('sesi/create', [SessionController::class, 'create']);
+});
 
-Route::get('sesi', [SessionController::class, 'index'])->middleware('isGuest');
-Route::post('sesi/login', [SessionController::class, 'login'])->middleware('isGuest');
-Route::get('sesi/logout', [SessionController::class, 'logout']);
-Route::get('sesi/register', [SessionController::class,'register'])->name('register')->middleware('isGuest');
-Route::post('sesi/create', [SessionController::class, 'create'])->middleware('isGuest');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard')->middleware('auth');
 
 Route::get('/filter-data', [DatabaseController::class, 'filter'])->name('filter');

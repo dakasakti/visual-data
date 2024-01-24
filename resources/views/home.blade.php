@@ -1,7 +1,4 @@
 @extends('layouts.app')
-{{-- @extends('database.index') --}}
-{{-- @extends('DatabaseController') --}}
-
 
 @section('content')
 <div class="container">

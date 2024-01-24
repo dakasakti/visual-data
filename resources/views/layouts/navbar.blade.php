@@ -5,6 +5,44 @@
     <div id="content">
 
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <form action="/filter-data" method="GET">
+                      
+    
+                            <div class="form-inline">
+                                <div class="col-auto">
+                                    <label for="start_date">Tanggal mulai : </label>
+                                    <input type="date" class="form-control" name="start_date"
+                                        value="{{ old('start_date') }}">
+                                </div>
+                                <div class="col-auto">
+                                    <label for="end_date">Tanggal akhir : </label>
+                                    <input type="date" class="form-control" name="end_date"
+                                        value="{{ old('end_date') }}">
+                                </div>
+                                <div class="col w-10">
+                                    <label for="customer_name">Nama customer : </label>
+                                    @if (isset($dropdown['NAMA_CUSTOMER']))
+                                        <select class="form-select" name="customer_name" id="NAMA_CUSTOMER"
+                                            aria-label="Size 3 select example" required value="{{ old('NAMA_CUSTOMER') }}">
+                                            <optgroup label="Nama customer yang akan di filter">
+                                                @foreach ($dropdown['NAMA_CUSTOMER'] as $id => $NAMA_CUSTOMER)
+                                                    <option value="{{ $id }}">{{ $NAMA_CUSTOMER }}</option>
+                                                @endforeach
+                                            </optgroup>
+                                        </select>
+                                    @endif
+                                </div>
+                                <div class="col-auto mt-4">
+                                    <button type="submit" class="btn btn-outline-primary""><i class="fa-solid fa-filter"></i> Filter</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
 
             <!-- Sidebar Toggle (Topbar) -->
             <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -20,7 +58,7 @@
                 <li class="nav-item dropdown no-arrow">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
+                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::check() ? Auth::user()->name : 'Guest' }}</span>
                         <img class="img-profile rounded-circle" src="{{ asset('images/Zuxxy.jpg') }}">
                     </a>
                     <!-- Dropdown - User Information -->
@@ -73,4 +111,4 @@
                 });
             </script>
         </nav>
-        <!-- End of Topbar -->
+     

@@ -1,134 +1,193 @@
+<style>
+    .scroll{
+        height: 770px;
+        overflow: scroll;
+    }
+    .modal-backdrop{
+        background-color: rgba(54, 54, 54, 0.1) !important; 
+    }
+</style>
+
 <div class="modal fade" id="modal-detail" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5 d-flex mt-3 text-center">View Detail</h1>
+                <h1 class="modal-title fs-5 d-flex mt-3 d-flex">View Detail</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body " id="modal-detail-content">
+            <div class="scroll">
+            <div class="modal-body table-responsive " id="modal-detail-content">
                 <div class="row justify-content-center">
                     <div class="container-fluid">
-                    <table class="table table-striped">
-                        <tr>
-                            <td>No</td>
-                            <td>: {{ $item->id }}</td>
-                        </tr>
-                        <tr>
-                            <td>Tanggal</td>
-                            <td>: {{ \Carbon\Carbon::parse($item->Tanggal)->format('d/m/Y') }}</td>
-                        </tr>
-                        <tr>
-                            <td>ORG CODE</td>
-                            <td>: {{ $item->ORG_CODE }}</td>
-                        </tr>
-                        <tr>
-                            <td>NAMA CUSTOMER</td>
-                            <td>: {{ $item->NAMA_CUSTOMER }}</td>
-                        </tr>
-                        <tr>
-                            <td>KODE PRODUK</td>
-                            <td>: {{ $item->KODE_PRODUK }}</td>
-                        </tr>
-                        <tr>
-                            <td>AMMOUNT</td>
-                            <td>: {{ $item->AMMOUNT }}</td>
-                        </tr>
-                        <tr>
-                            <td>HARGA JUAL</td>
-                            <td>: {{ $item->HARGA_JUAL }}</td>
-                        </tr>
-                        <tr>
-                            <td>TRX</td>
-                            <td>: {{ $item->TRX }}</td>
-                        </tr>
-                        <tr>
-                            <td>TYPE MITRA</td>
-                            <td>: {{ $item->TYPE_MITRA }}</td>
-                        </tr>
-                        <tr>
-                            <td>AMMOUNT FIX</td>
-                            <td>: {{ $item->AMMOUNT_FIX }}</td>
-                        </tr>
-                        <tr>
-                            <td>PRODUK FIX</td>
-                            <td>: {{ $item->PRODUK_FIX }}</td>
-                        </tr>
-                        <tr>
-                            <td>BUCKET NAME</td>
-                            <td>: {{ $item->BUCKET_NAME }}</td>
-                        </tr>
-                        <tr>
-                            <td>Type Produk</td>
-                            <td>: {{ $item->Type_Produk }}</td>
-                        </tr>
-                        <tr>
-                            <td>TYPE BISNIS</td>
-                            <td>: {{ $item->TYPE_BISNIS }}</td>
-                        </tr>
-                        <tr>
-                            <td>REV INPPN</td>
-                            <td>: {{ $item->REV_INPPN }}</td>
-                        </tr>
-                        <tr>
-                            <td>PAJAK</td>
-                            <td>: {{ $item->PAJAK }}</td>
-                        </tr>
-                        <tr>
-                            <td>REV EXPPN</td>
-                            <td>: {{ $item->REV_EXPPN }}</td>
-                        </tr>
-                        <tr>
-                            <td>HPP</td>
-                            <td>: {{ $item->HPP }}</td>
-                        </tr>
-                        <tr>
-                            <td>TOTAL HPP INPPN</td>
-                            <td>: {{ $item->TOTAL_HPP_INPPN }}</td>
-                        </tr>
-                        <tr>
-                            <td>TOTAL HPP EXPPN</td>
-                            <td>: {{ $item->TOTAL_HPP_EXPPN }}</td>
-                        </tr>
-                        <tr>
-                            <td>Margin INPPN</td>
-                            <td>: {{ $item->Margin_INPPN }}</td>
-                        </tr>
-                        <tr>
-                            <td>Margin EXPPN</td>
-                            <td>: {{ $item->Margin_EXPPN }}</td>
-                        </tr>
-                        <tr>
-                            <td>Hari</td>
-                            <td>: {{ $item->Hari }}</td>
-                        </tr>
-                        <tr>
-                            <td>Bulan</td>
-                            <td>: {{ $item->Bulan }}</td>
-                        </tr>
-                        <tr>
-                            <td>KET PROD</td>
-                            <td>: {{ $item->KET_PROD }}</td>
-                        </tr>
-                    </table>
+                        <table class="table table-bordered no-margin">
+                            <tr>
+                                <td>No</td>
+                                <td><span id="id"></td>
+                            </tr>
+                            <tr>
+                                <td>Tanggal</td>
+                                <td><span id="tanggal"></td>
+                            </tr>
+                            <tr>
+                                <td>ORG_CODE</td>
+                                <td><span id="org"></td>
+                            </tr>
+                            <tr>
+                                <td>NAMA_CUSTOMER</td>
+                                <td><span id="nama"></td>
+                            </tr>
+                            <tr>
+                                <td>KODE_PRODUK</td>
+                                <td><span id="kode"></td>
+                            </tr>
+                            <tr>
+                                <td>AMMOUNT</td>
+                                <td><span id="ammount"></td>
+                            </tr>
+                            <tr>
+                                <td>HARGA_JUAL</td>
+                                <td><span id="harga"></td>
+                            </tr>
+                            <tr>
+                                <td>TRX</td>
+                                <td><span id="trx"></td>
+                            </tr>
+                            <tr>
+                                <td>TYPE_MITRA</td>
+                                <td><span id="typem"></td>
+                            </tr>
+                            <tr>
+                                <td>AMMOUNT_FIX</td>
+                                <td><span id="ammountf"></td>
+                            </tr>
+                            <tr>
+                                <td>PRODUK_FIX</td>
+                                <td><span id="produk"></td>
+                            </tr>
+                            <tr>
+                                <td>BUCKET_NAME</td>
+                                <td><span id="bucket"></td>
+                            </tr>
+                            <tr>
+                                <td>Type_Produk</td>
+                                <td><span id="typep"></td>
+                            </tr>
+                            <tr>
+                                <td>TYPE_BISNIS</td>
+                                <td><span id="typeb"></td>
+                            </tr>
+                            <tr>
+                                <td>REV_INPPN</td>
+                                <td><span id="revin"></td>
+                            </tr>
+                            <tr>
+                                <td>PAJAK</td>
+                                <td><span id="pajak"></td>
+                            </tr>
+                            <tr>
+                                <td>REV_EXPPN</td>
+                                <td><span id="revex"></td>
+                            </tr>
+                            <tr>
+                                <td>HPP</td>
+                                <td><span id="hpp"></td>
+                            </tr>
+                            <tr>
+                                <td>TOTAL_HPP_INPPN</td>
+                                <td><span id="thi"></td>
+                            </tr>
+                            <tr>
+                                <td>TOTAL_HPP_EXPPN</td>
+                                <td><span id="the"></td>
+                            </tr>
+                            <tr>
+                                <td>MARGIN_INPPN</td>
+                                <td><span id="margini"></td>
+                            </tr>
+                            <tr>
+                                <td>MARGIN_EXPPN</td>
+                                <td><span id="margine"></td>
+                            </tr>
+                            <tr>
+                                <td>Hari</td>
+                                <td><span id="hari"></td>
+                            </tr>
+                            <tr>
+                                <td>Bulan</td>
+                                <td><span id="bulan"></td>
+                            </tr>
+                            <tr>
+                                <td>KETPROD</td>
+                                <td><span id="ketprod"></td>
+                            </tr>
+
+                        </table>
+                    </div>
                 </div>
             </div>
 
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="..."></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="..."></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="..."></script>
-<script>
-    $('.view-detail').on('click', function (event) {
-        var button = $(this);
-        var itemId = button.data('item-id');
-        var modalContent = $('#modal-detail-content');
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="..."></script>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="..."></script>
 
-        var url = 'modal/detailmodal' + itemId;
+                <!--var itu bikin sendiri (bebas), text ngikutin isi val/text,kalo .data isi sesuai yang udah dibuat di tombolnya misal (data-id), id# dipake buat manggil di tdnya -->
+               
+                <script>
+                    $(document).ready(function() {
+                        $(document).on('click', '.view-detail', function() {
+                            var id = $(this).data('id');
+                            var Tanggal = $(this).data('tanggal');
+                            var org = $(this).data('org');
+                            var nama = $(this).data('nama');
+                            var kode = $(this).data('kode');
+                            var ammount = $(this).data('ammount');
+                            var harga = $(this).data('harga');
+                            var trx = $(this).data('trx');
+                            var typem = $(this).data('typem');
+                            var ammountf = $(this).data('ammountf');
+                            var produk = $(this).data('produk');
+                            var bucket = $(this).data('bucket');
+                            var typep = $(this).data('typep');
+                            var typeb = $(this).data('typeb');
+                            var revin = $(this).data('revin');
+                            var pajak = $(this).data('pajak');
+                            var revex = $(this).data('revex');
+                            var hpp = $(this).data('hpp');
+                            var thi = $(this).data('thi');
+                            var the = $(this).data('the');
+                            var margini = $(this).data('margini');
+                            var margine = $(this).data('margine');
+                            var hari = $(this).data('hari');
+                            var bulan = $(this).data('bulan');
+                            var ketprod = $(this).data('ketprod');
 
-        modalContent.load(url, function () {
-            $('#modal-detail').modal('show');
-        });
-    });
-</script>
+                            $('#id').text(id);
+                            $('#tanggal').text(Tanggal);
+                            $('#org').text(org);
+                            $('#nama').text(nama);
+                            $('#kode').text(kode);
+                            $('#ammount').text(ammount);
+                            $('#harga').text(harga);
+                            $('#trx').text(trx);
+                            $('#typem').text(typem);
+                            $('#ammountf').text(ammountf);
+                            $('#produk').text(produk);
+                            $('#bucket').text(bucket);
+                            $('#typep').text(typep);
+                            $('#typeb').text(typeb);
+                            $('#revin').text(revin);
+                            $('#pajak').text(pajak);
+                            $('#revex').text(revex);
+                            $('#hpp').text(hpp);
+                            $('#thi').text(thi);
+                            $('#the').text(the);
+                            $('#margini').text(margini);
+                            $('#margine').text(margine);
+                            $('#hari').text(hari);
+                            $('#bulan').text(bulan);
+                            $('#ketprod').text(ketprod);
+                        });
+                    });
+                </script>

@@ -10,8 +10,7 @@
             <div class="card-header py-3">
                 <h4 class="m-0 font-weight-bold text-primary">Create Data</h4>
             </div>
-            <form action="{{ route('updatedata', $data->id) }}" method="POST" enctype="multipart/form-data">
-
+            <form action="{{ route('updatedata', ['id' => $data->id]) }}" method="POST" enctype="multipart/form-data">            
                 @csrf
                 <div class="container mt-4">
                     <div class="card-body">

@@ -4,6 +4,6 @@
 
 @include('layouts.navbar')
 
-@include('layouts.content')
+@include('layouts.tables')
 
 @include('layouts.footer')
