@@ -8,13 +8,15 @@ use Illuminate\Http\Request;
 class UpdateContoller extends Controller
 {
     public function tampilkandata($id){
+   
         $data = Database::find($id);
-        // dd($data);
-        return view('database.tampildata',compact('data'),[
-            "title" => "Update"
-
+    
+        return view('database.tampildata',compact('data'), [
+            'title' => 'Update Data',
         ]);
     }
+    
+
     public function updatedata(Request $request, $id){
         $data = Database::find($id);
         $data -> update($request->all());

@@ -1,65 +1,42 @@
 <!-- Sidebar -->
 @include('layouts.header')
-<ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion " id="accordionSidebar">
 
-    <!-- Sidebar - Brand -->
-    {{-- <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
-        <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
-        </div> --}}
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url('/database') }}">
-        <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
+<ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center mt-3 mb-3" href="{{ url('/database') }}">
+        <div class="sidebar-brand-icon mt-3">
+            <img src="{{ asset('images/kisel.png') }}" width="40%">
         </div>
-        <div class="sidebar-brand-text mx-3">KSS <sup></sup></div>
     </a>
 
-    <!-- Divider -->
-    <hr class="sidebar-divider">
-    <!-- Nav Item - Dashboard -->
-    <li class="nav-item ">
-        <a class="nav-link {{ $title === 'Home' ? 'active' : '' }}" href="{{ url('/database') }}"><i
-                class="fas fa-fw fa-tachometer-alt"></i>
+    <li class="nav-item {{ $title === 'Home' ? 'active' : '' }}">
+        <a class="nav-link" href="{{ url('/database') }}">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span>
         </a>
     </li>
 
-    <!-- Divider -->
     <hr class="sidebar-divider">
 
-    <!-- Heading -->
-    <div class="sidebar-heading">
-        Interface
-    </div>
+   
+    {{-- @if (auth()->user()->hasRole('admin'))
+        <li class="nav-item {{ $title === 'Create Data' ? 'active' : '' }}">
+            <a class="nav-link" href="{{ url('/tambahdata') }}">
+                <i class="fa-solid fa-circle-plus"></i>
+                <span>Create Data</span>
+            </a>
+        </li>
+    @endif --}}
 
-    <!-- Nav Item - Pages Collapse Menu -->
-
-
-    <!-- Nav Item - Charts -->
-    <li class="nav-item">
-        <a class="nav-link {{ $title === 'Create Data' ? 'active' : '' }}" href="{{ url('/tambahdata') }}"><i
-                class="fa-solid fa-circle-plus"></i>
-            <span>Create Data</span>
-        </a>
-    </li>
-
-    <!-- Nav Item - Tables -->
-    <li class="nav-item">
-        <a class="nav-link {{ $title === 'Diagram' ? 'active' : '' }}" href="{{ url('/diagram') }}"><i
-                class="fas fa-fw fa-chart-area"></i>
+    <li class="nav-item {{ $title === 'Diagram' ? 'active' : '' }}">
+        <a class="nav-link" href="{{ url('/diagram') }}">
+            <i class="fas fa-fw fa-chart-area"></i>
             <span>Chart</span>
         </a>
     </li>
 
-    <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 
-    <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
     </div>
-
-
-
-
 </ul>

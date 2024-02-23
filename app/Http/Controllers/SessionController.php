@@ -2,22 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
+use App\Models\UserNew;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
+use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Traits\HasRoles;
 
 class SessionController extends Controller
 {
-    function index()
+    public function index()
     {
         return view('sesi.index', [
             'title' => 'Login'
         ]);
     }
 
-    function login(Request $request)
+    public function login(Request $request)
     {
         $request->validate([
             'email' => 'required',
@@ -30,60 +31,69 @@ class SessionController extends Controller
         ];
 
         if (Auth::attempt($infologin)) {
-            return redirect('/database')->with('bisalogin', Auth::user()->name . ' Berhasil login');
+            $user = Auth::user();
+
+            if (Auth::user()->hasRole('admin')) {
+               
+            } elseif ($user->hasRole('user')) {
+            
+            }
+
+            
+            return redirect('/database')->with('bisalogin', $user->name . ' Berhasil login');
         } else {
+           
             return redirect('/sesi')->with('loginError', 'Login failed!');
         }
     }
 
-
-    function logout()
+    public function logout()
     {
-        try {
+      
+        if (Auth::check()) {
             Auth::logout();
-            return redirect('/sesi')->with('berhasil', 'Logout berhasil silahkan login');
-        } catch (\Exception $e) {
-            Log::error('Error during logout: ' . $e->getMessage());
-            return redirect('/database')->with('logout', 'Terjadi kesalahan saat logout');
+            return redirect('/sesi')->with('berhasil', 'Berhasil logout');
         }
+
+        return redirect('/sesi')->with('error', 'Anda tidak bisa logout');
     }
-
-
 
     public function register()
     {
         return view('sesi.register', [
             'title' => 'Register',
             "active" => "Register",
-
         ]);
     }
 
-
-    function create(Request $request)
+    public function create(Request $request)
     {
-
         $request->validate([
             'name' => 'required|max:255|regex:/^[A-Z][a-z]+$/',
-            'username' => 'required|min:3|max:255|unique:users',
-            'email' => 'required|email:dns|unique:users',
-            'password' => 'required|min:5|max:255'
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:5|max:255',
+            'role' => 'required|in:user,admin', 
         ]);
 
         $data = [
             'name' => $request->name,
-            'username' => $request->username,
             'email' => $request->email,
-            'password' => Hash::make($request->password)
+            'password' => Hash::make($request->password),
+            'role' => $request->role, 
         ];
-        User::create($data);
+        
+      
+        $user = UserNew::create($data);
 
-        $infologin = [
-            'name' => $request->name,
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => Hash::make($request->password)
-        ];
+        
+
+       
+        $roleName = $request->input('role');
+        $role = Role::where('name', $roleName)->first();
+
+        if ($role) {
+            $user->assignRole($role);
+        }
 
         return redirect('/sesi')->with('berhasil', 'Register berhasil silahkan login');
     }

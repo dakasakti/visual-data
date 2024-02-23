@@ -3,310 +3,225 @@
 
 
 
-
-<div class="container mt-4">
-    <div class="d-flex justify-content-center">
+<div class="container mt-4 ">
+    <div class="d-flex justify-content-center ">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h4 class="m-0 font-weight-bold text-primary">Create Data</h4>
+                <h4 class="m-0 font-weight-bold text-primary"><a class="btn btn-danger" href="{{ url('/database') }}" ><i class="fa-solid fa-arrow-left"></i></a>  Update Data</h4>   
             </div>
-            <form action="{{ route('updatedata', ['id' => $data->id]) }}" method="POST" enctype="multipart/form-data">            
+            <form action="/updatedata/{{ $data->id }} " method="POST" enctype="multipart/form-data">
                 @csrf
-                <div class="container mt-4">
-                    <div class="card-body">
-                        <div class="row g-3">
-                            <!-- Kolom 1 -->
-                            <div class="col-md-6">
-                                <label for="datepicker">Choose a Date</label>
-                                <input type id="datepicker" name="datepicker" class="form-control flatpickr"
-                                    placeholder="Select date" autofocus>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="ORG_CODE" class="form-label">ORG_CODE</label>
-                                <select class="form-select" name="ORG_CODE" id="ORG_CODE"
-                                    aria-label="Size 3 select example" required value="{{ old('ORG_CODE') }}">
-                                    <option value="">--pilih--</option>
-                                    @foreach ($dropdownData['ORG_CODE'] as $id => $ORG_CODE)
-                                        <option value="{{ $id }}">{{ $ORG_CODE }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-
-                            <!-- Kolom 2 -->
-                            <div class="col-md-6">
-                                <label for="NAMA_CUSTOMER" class="form-label">NAMA_CUSTOMER</label>
-                                <select class="form-select" name="NAMA_CUSTOMER" id="NAMA_CUSTOMER"
-                                    aria-label="Size 3 select example" required value="{{ old('NAMA_CUSTOMER') }}">
-                                    <option value="">--pilih--</option>
-                                    @foreach ($dropdownData['NAMA_CUSTOMER'] as $id => $NAMA_CUSTOMER)
-                                        <option value="{{ $id }}">{{ $NAMA_CUSTOMER }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">KODE_PRODUK</label>
-                                <select class="form-select" name="KODE_PRODUK" id="KODE_PRODUK"
-                                    aria-label="Size 3 select example" required value="{{ old('KODE_PRODUK') }}">
-                                    <option value="">--pilih--</option>
-                                    @foreach ($dropdownData['KODE_PRODUK'] as $id => $KODE_PRODUK)
-                                        <option value="{{ $id }}">{{ $KODE_PRODUK }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-
-                            <!-- Kolom 3 -->
-                            <div class="col-md-6">
-                                <label for="AMMOUNT" class="form-label">AMMOUNT</label>
-                                <select class="form-select" name="AMMOUNT" id="AMMOUNT"
-                                    aria-label="Size 3 select example" required value="{{ old('AMMOUNT') }}">
-                                    <option value="">--pilih--</option>
-                                    @foreach ($dropdownData['AMMOUNT'] as $id => $AMMOUNT)
-                                        <option value="{{ $id }}">{{ $AMMOUNT }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="exampleInputEmail1" class="form-label">HARGA_JUAL</label>
-                                <select class="form-select" name="HARGA_JUAL" id="HARGA_JUAL"
-                                    aria-label="Size 3 select example" required value="{{ old('HARGA_JUAL') }}">
-                                    <option value="">--pilih--</option>
-                                    @foreach ($dropdownData['HARGA_JUAL'] as $id => $HARGA_JUAL)
-                                        <option value="{{ $id }}">{{ $HARGA_JUAL }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-
-                            <!-- Kolom 4 -->
-                            <div class="col-md-6">
-                                <label for="exampleInputEmail1" class="form-label">TRX</label>
-                                <select class="form-select" name="TRX" id="TRX"
-                                    aria-label="Size 3 select example" required value="{{ old('TRX') }}">
-                                    <option value="">--pilih--</option>
-                                    @foreach ($dropdownData['TRX'] as $id => $TRX)
-                                        <option value="{{ $id }}">{{ $TRX }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="exampleInputEmail1" class="form-label">TYPE_MITRA</label>
-                                <select class="form-select" name="TYPE_MITRA" id="TYPE_MITRA"
-                                    aria-label="3 select example" required value="{{ old('TYPE_MITRA') }}">
-                                    <option value="">--pilih--</option>
-                                    @foreach ($dropdownData['TYPE_MITRA'] as $id => $TYPE_MITRA)
-                                        <option value="{{ $id }}">{{ $TYPE_MITRA }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-
-                            <!-- Kolom 5 -->
-                            <div class="col-md-6">
-                                <label for="exampleInputEmail1" class="form-label">AMMOUNT_FIX</label>
-                                <select class="form-select" name="AMMOUNT_FIX" id="AMMOUNT_FIX"
-                                    aria-label="3 select example" required value="{{ old('AMMOUNT_FIX') }}">
-                                    <option value="">--pilih--</option>
-                                    @foreach ($dropdownData['AMMOUNT_FIX'] as $id => $AMMOUNT_FIX)
-                                        <option value="{{ $id }}">{{ $AMMOUNT_FIX }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="exampleInputEmail1" class="form-label">PRODUK_FIX</label>
-                                <select class="form-select" name="PRODUK_FIX" id="PRODUK_FIX"
-                                    aria-label="3 select example" required value="{{ old('PRODUK_FIX') }}">
-                                    <option value="">--pilih--</option>
-                                    @foreach ($dropdownData['PRODUK_FIX'] as $id => $PRODUK_FIX)
-                                        <option value="{{ $id }}">{{ $PRODUK_FIX }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-
-                            <!-- Kolom 6 -->
-                            <div class="col-md-6">
-                                <label for="exampleInputEmail1" class="form-label">BUCKET_NAME</label>
-                                <select class="form-select" name="BUCKET_NAME" id="BUCKET_NAME"
-                                    aria-label="3 select example" required value="{{ old('BUCKET_NAME') }}">
-                                    <option value="">--pilih--</option>
-                                    @foreach ($dropdownData['BUCKET_NAME'] as $id => $BUCKET_NAME)
-                                        <option value="{{ $id }}">{{ $BUCKET_NAME }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-6">Type_Produk
-                                <label class="form-label">Type_Produk</label>
-                                <select class="form-select" name="Type_Produk" id="Type_Produk"
-                                    aria-label="3 select example" required value="{{ old('Type_Produk') }}">
-                                    <option value="">--pilih--</option>
-                                    @foreach ($dropdownData['Type_Produk'] as $id => $Type_Produk)
-                                        <option value="{{ $id }}">{{ $Type_Produk }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-
-                            <!-- Kolom 7 -->
-                            <div class="col-md-6">
-                                <label for="exampleInputEmail1" class="form-label">TYPE_BISNIS</label>
-                                <select class="form-select" name="TYPE_BISNIS" id="TYPE_BISNIS"
-                                    aria-label="3 select example" required value="{{ old('TYPE_BISNIS') }}">
-                                    <option value="">--pilih--</option>
-                                    @foreach ($dropdownData['TYPE_BISNIS'] as $id => $TYPE_BISNIS)
-                                        <option value="{{ $id }}">{{ $TYPE_BISNIS }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="exampleInputEmail1" class="form-label">REV_INPPN</label>
-                                <select class="form-select" name="REV_INPPN" id="REV_INPPN"
-                                    aria-label="3 select example" required value="{{ old('REV_INPPN') }}">
-                                    <option value="">--pilih--</option>
-                                    @foreach ($dropdownData['REV_INPPN'] as $id => $REV_INPPN)
-                                        <option value="{{ $id }}">{{ $REV_INPPN }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-
-                            <!-- Kolom 8 -->
-                            <div class="col-md-6">
-                                <label for="exampleInputEmail1" class="form-label">REV_EXPPN</label>
-                                <select class="form-select" name="REV_EXPPN" id="REV_EXPPN"
-                                    aria-label="3 select example" required value="{{ old('REV_EXPPN') }}">
-                                    <option value="">--pilih--</option>
-                                    @foreach ($dropdownData['REV_EXPPN'] as $id => $REV_EXPPN)
-                                        <option value="{{ $id }}">{{ $REV_EXPPN }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="exampleInputEmail1" class="form-label">PAJAK</label>
-                                <select class="form-select" name="PAJAK" id="PAJAK"
-                                    aria-label="3 select example" required value="{{ old('PAJAK') }}">
-                                    <option value="">--pilih--</option>
-                                    @foreach ($dropdownData['PAJAK'] as $id => $PAJAK)
-                                        <option value="{{ $id }}">{{ $PAJAK }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-
-                            <!-- Kolom 9 -->
-                            <div class="col-md-6">
-                                <label for="exampleInputEmail1" class="form-label">HPP</label>
-                                <select class="form-select" name="HPP" id="HPP"
-                                    aria-label="3 select example" required value="{{ old('HPP') }}">
-                                    <option value="">--pilih--</option>
-                                    @foreach ($dropdownData['HPP'] as $id => $HPP)
-                                        <option value="{{ $id }}">{{ $HPP }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="exampleInputEmail1" class="form-label">TOTAL_HPP_INPPN</label>
-                                <select class="form-select" name="TOTAL_HPP_INPPN" id="TOTAL_HPP_INPPN"
-                                    aria-label="3 select example" required value="{{ old('TOTAL_HPP_INPPN') }}">
-                                    <option value="">--pilih--</option>
-                                    @foreach ($dropdownData['TOTAL_HPP_INPPN'] as $id => $TOTAL_HPP_INPPN)
-                                        <option value="{{ $id }}">{{ $TOTAL_HPP_INPPN }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-
-                            <!-- Kolom 10 -->
-                            <div class="col-md-6">
-                                <label for="exampleInputEmail1" class="form-label">TOTAL_HPP_EXPPN</label>
-                                <select class="form-select" name="TOTAL_HPP_EXPPN" id="TOTAL_HPP_EXPPN"
-                                    aria-label="3 select example" required value="{{ old('TOTAL_HPP_EXPPN') }}">
-                                    <option value="">--pilih--</option>
-                                    @foreach ($dropdownData['TOTAL_HPP_EXPPN'] as $id => $TOTAL_HPP_EXPPN)
-                                        <option value="{{ $id }}">{{ $TOTAL_HPP_EXPPN }}</option>
-                                    @endforeach
-                                </select>
-                                <div class="col-md-6">
-                                    <label for="exampleInputEmail1" class="form-label">MARGIN_INPPN</label>
-                                    <select class="form-select" name="MARGIN_INPPN" id="MARGIN_INPPN"
-                                        aria-label="3 select example" required value="{{ old('MARGIN_INPPN') }}">
-                                        <option value="">--pilih--</option>
-                                        @foreach ($dropdownData['MARGIN_INPPN'] as $id => $MARGIN_INPPN)
-                                            <option value="{{ $id }}">{{ $MARGIN_INPPN }}</option>
-                                        @endforeach
+                <div class="container mt-5 ">
+                    <div class="card ">
+                        <div class="card-body">
+                            <div class="row g-2">
+                                <div class="col mb-2">
+                                    <label for="exampleInputEmail1" class="form-label">Tanggal</label>
+                                    <div class="dates" style="color:#000000;">
+                                        <input type="text" style="width:200px;background-color:#f9f9f9;"
+                                            class="form-control" id="usr1" name="Tanggal" autocomplete="off"
+                                            value="{{ $data->Tanggal }}">
+                                    </div>
+                                </div>
+                                <div class="col mb-2">
+                                    <label for="exampleInputEmail1" class="form-label">ORG_CODE</label>
+                                    <select class="form-select"name="ORG_CODE" aria-label="Size 3 select example">
+                                        <option selected>{{ $data->ORG_CODE }}</option>
+                                        <option value="1">703010</option>
+                                        <option value="2">703011</option>
+                                        <option value="3">704020</option>
+                                        <option value="4">705020</option>
+                                        <option value="5">717004</option>
+                                        <option value="6">718014</option>
                                     </select>
                                 </div>
-
-
-                                <!-- Kolom 11 -->
-                                <div class="col-md-6">
-                                    <label for="exampleInputEmail1" class="form-label">MARGIN_EXPPN</label>
-                                    <select class="form-select" name="MARGIN_EXPPN" id="MARGIN_EXPPN"
-                                        aria-label="3 select example" required value="{{ old('MARGIN_EXPPN') }}">
+                            </div>
+                            <div class="row g-2">
+                                <div class="col mb-2">
+                                    <label for="exampleInputEmail1" class="form-label">NAMA_CUSTOMER</label>
+                                    <select class="form-select"name="NAMA_CUSTOMER" aria-label="Size 3 select example">
+                                        <option selected>{{ $data->NAMA_CUSTOMER }}</option>
                                         <option value="">--pilih--</option>
-                                        @foreach ($dropdownData['MARGIN_EXPPN'] as $id => $MARGIN_EXPPN)
-                                            <option value="{{ $id }}">{{ $MARGIN_EXPPN }}</option>
-                                        @endforeach
+                                        <option value="1">Fliptech Lentera Inspirasi Pertiwi</option>
+                                        <option value="2">Global Indo Multimedia</option>
+                                        <option value="3">Ovo</option>
+                                        <option value="3">PT Akses Solusi Nusantara</option>
+                                        <option value="3">PT ALFFAR BERKAH MANDIRI CORPORINDO</option>
+                                        <option value="3">PT Digital Kreasi Telekomunikasi</option>
+                                        <option value="3">PT EMobile Indonesia</option>
+                                        <option value="3">PT MARKAZ JALAN BERSAMA</option>
+                                        <option value="3">PT MEGA KREASI INDOTAMA</option>
+                                        <option value="3">PT Mitra Distribusi Utama</option>
+                                        <option value="3">PT MMBC TOUR AND TRAVEL</option>
+                                        <option value="3">PT SARANA KREASI PERKASA (PLUSLINK)</option>
+                                        <option value="3">PT Widya Mahardika Raya</option>
+                                        <option value="3">PT. Berkah Berkat Bersatu</option>
+                                        <option value="3">Satulink Lintas Indonesia</option>
                                     </select>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col mb-2">
+                                    <label class="form-label">KODE_PRODUK</label>
+                                    <input type="text" class="form-control"name="KODE_PRODUK"
+                                        id="floatingInput"value="{{ $data->KODE_PRODUK }}">
+
+                                </div>
+                            </div>
+                            <div class="row g-2">
+                                <div class="col mb-2">
+                                    <label for=class="form-label">AMMOUNT</label>
+                                    <input type="number" class="form-control"name="AMMOUNT" id="floatingInput"
+                                        value="{{ $data->AMMOUNT }}">
+                                </div>
+                                <div class="col mb-2">
+                                    <label for="exampleInputEmail1" class="form-label">HARGA_JUAL</label>
+                                    <input type="number" class="form-control"name="HARGA_JUAL" id="floatingInput"
+                                        value="{{ $data->HARGA_JUAL }}">
+                                </div>
+                            </div>
+                            <div class="row g-2">
+                                <div class="col mb-2">
+                                    <label for="exampleInputEmail1" class="form-label">TRX</label>
+                                    <input type="number" class="form-control"name="TRX" id="floatingInput"
+                                        value="{{ $data->TRX }}">
+                                </div>
+                                <div class="col mb-2">
+                                    <label for="exampleInputEmail1" class="form-label">TYPE_MITRA</label>
+                                    <select class="form-select" name="TYPE_MITRA" aria-label="3 select example">
+                                        <option selected>{{ $data->TYPE_MITRA }}</option>
+                                        <option value="official">official</option>
+                                        <option value="server">server</option>
+                                        <option value="SWITCHING">SWITCHING</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row g-2">
+                                <div class="col mb-2">
+                                    <label for="exampleInputEmail1" class="form-label">AMMOUNT_FIX</label>
+                                    <input type="number" class="form-control"name="AMMOUNT_FIX" id="floatingInput"
+                                        value="{{ $data->AMMOUNT_FIX }}">
+                                </div>
+                                <div class="col mb-2">
+                                    <label for="exampleInputEmail1" class="form-label">PRODUK_FIX</label>
+                                    <input type="text" class="form-control"name="PRODUK_FIX" id="floatingInput"
+                                        value="{{ $data->PRODUK_FIX }}">
+                                </div>
+                            </div>
+                            <div class="row g-2">
+                                <div class="col mb-2">
+                                    <label for="exampleInputEmail1" class="form-label">BUCKET_NAME</label>
+                                    <input type="text" class="form-control"name="BUCKET_NAME" id="floatingInput"
+                                        value="{{ $data->BUCKET_NAME }}">
+
+                                </div>
+                                <div class="col mb-2">
+                                    <label class="form-label">Type_Produk</label>
+                                    <select class="form-select" name="Type_Produk" aria-label="3 select example">
+                                        <option selected>{{ $data->Type_Produk }}</option>
+                                        <option value="UNIT">UNIT</option>
+                                        <option value="SWITCHING">SWITCHING</option>
+                                        <option value="PPOB">PPOB</option>
+                                        <option value="BULK">BULK</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row g-2">
+                                <div class="col mb-2">
+                                    <label for="exampleInputEmail1" class="form-label">TYPE_BISNIS</label>
+                                    <select class="form-select" name="TYPE_BISNIS" aria-label="3 select example">
+                                        <option selected>{{ $data->TYPE_BISNIS }}</option>
+                                        <option value="MOCAN">MOCAN</option>
+                                        <option value="SWITCHING">SWITCHING</option>
+                                    </select>
+                                </div>
+                                <div class="col mb-2">
+                                    <label for="exampleInputEmail1" class="form-label">REV_INPPN</label>
+                                    <input type="number" class="form-control"name="REV_INPPN" id="floatingInput"
+                                        value="{{ $data->REV_INPPN }}">
+                                </div>
+                            </div>
+                            <div class="row g-2">
+                                <div class="col mb-2">
+                                    <label for="exampleInputEmail1" class="form-label">REV_EXPPN</label>
+                                    <input type="number" class="form-control"name="REV_EXPPN" id="floatingInput"
+                                        value="{{ $data->REV_EXPPN }}">
+                                </div>
+                                <div class="col mb-2">
+                                    <label for="exampleInputEmail1" class="form-label">PAJAK</label>
+                                    <input type="text" class="form-control"name="PAJAK" id="floatingInput"
+                                        value="{{ $data->PAJAK }}">
+                                </div>
+                            </div>
+
+                            <div class="row g-2">
+                                <div class="col mb-2">
+                                    <label for="exampleInputEmail1" class="form-label">HPP</label>
+                                    <input type="number" class="form-control"name="HPP" id="floatingInput"
+                                        value="{{ $data->HPP }}">
+                                </div>
+                                <div class="col mb-2">
+                                    <label for="exampleInputEmail1" class="form-label">TOTAL_HPP_INPPN</label>
+                                    <input type="number" class="form-control"name="TOTAL_HPP_INPPN"
+                                        id="floatingInput" value="{{ $data->TOTAL_HPP_INPPN }}">
+                                </div>
+                            </div>
+
+                            <div class="row g-2">
+                                <div class="col mb-2">
+                                    <label for="exampleInputEmail1" class="form-label">TOTAL_HPP_EXPPN</label>
+                                    <input type="number" class="form-control"name="TOTAL_HPP_EXPPN"
+                                        id="floatingInput" value="{{ $data->TOTAL_HPP_EXPPN }}">
+                                </div>
+                                <div class="col mb-2">
+                                    <label for="exampleInputEmail1" class="form-label">Margin_INPPN</label>
+                                    <input type="number" class="form-control"name="Margin_INPPN" id="floatingInput"
+                                        value="{{ $data->Margin_INPPN }}">
+                                </div>
+                            </div>
+                            <div class="row g-2">
+                                <div class="col mb-2">
+                                    <label for="exampleInputEmail1" class="form-label">Margin_INPPN</label>
+                                    <input type="number" class="form-control"name="Margin_INPPN" id="floatingInput"
+                                        value="{{ $data->Margin_INPPN }}">
+                                </div>
+                                <div class="col mb-2">
                                     <label for="exampleInputEmail1" class="form-label">Hari</label>
-                                    <select class="form-select" name="Hari" id="Hari"
-                                        aria-label="3 select example" required value="{{ old('Hari') }}">
-                                        <option value="">--pilih--</option>
-                                        @foreach ($dropdownData['Hari'] as $id => $Hari)
-                                            <option value="{{ $id }}">{{ $Hari }}</option>
-                                        @endforeach
-                                    </select>
+                                    <input type="text" class="form-control"name="Hari" id="floatingInput"
+                                        value="{{ $data->Hari }}">
                                 </div>
-
-
-                                <!-- Kolom 12 -->
-                                <div class="col-md-6">
+                            </div>
+                            <div class="row g-2">
+                                <div class="col mb-2 ">
                                     <label for="exampleInputEmail1" class="form-label">Bulan</label>
-                                    <select class="form-select" name="Bulan" id="Bulan"
-                                        aria-label="3 select example" required value="{{ old('Bulan') }}">
-                                        <option value="">--pilih--</option>
-                                        @foreach ($dropdownData['Bulan'] as $id => $Bulan)
-                                            <option value="{{ $id }}">{{ $Bulan }}</option>
-                                        @endforeach
-                                    </select>
+                                    <input type="number" class="form-control"name="Bulan" id="floatingInput"
+                                        value="{{ $data->Bulan }}">
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col mb-2">
                                     <label for="exampleInputEmail1" class="form-label">KET_PROD</label>
-                                    <select class="form-select" name="KET_PROD" id="KET_PROD"
-                                        aria-label="3 select example" required value="{{ old('KET_PROD') }}">
-                                        <option value="">--pilih--</option>
-                                        @foreach ($dropdownData['KET_PROD'] as $id => $KET_PROD)
-                                            <option value="{{ $id }}">{{ $KET_PROD }}</option>
-                                        @endforeach
-                                    </select>
+                                    <input type="text" class="form-control"name="Hari" id="floatingInput"
+                                        value="{{ $data->KET_PROD }}">
                                 </div>
                             </div>
 
-                            <div class="row mt-3">
-                                <div class="d-flex justify-content-center">
-                                    <a class="btn btn-danger" href="{{ url('/database') }}">Back</a>
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
+
+                            <div class="row g-2">
+                                <button type="submit" class="btn btn-primary">Update</button>
                             </div>
+
                         </div>
-                    </div>
-            </form>
-        </div>
-    </div>
-</div>
 
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script>
-    flatpickr("#datepicker", {
-        dateFormat: "d/m/Y",
-    });
-</script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script>
-    $(".form-select").select2({
-        tags: true
-    });
-</script>
+
+                            <script>
+                                $(function() {
+
+                                    $('.dates #usr1').datepicker({
+                                        'format': 'yyyy-mm-dd',
+                                        'autoclose': true
+                                    });
+
+
+                                });
+                            </script>
+
+
+            </form>

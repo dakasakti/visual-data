@@ -10,7 +10,7 @@ class Authenticate extends Middleware
     protected function redirectTo($request): ?string
 {
     if (!$request->expectsJson()) {
-        return route('register');
+        return route('sesi.register');
     }
     return null;
 }

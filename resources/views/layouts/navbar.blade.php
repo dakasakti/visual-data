@@ -5,7 +5,7 @@
     <div id="content">
 
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-            <div class="card-body">
+            {{-- <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">
                         <form action="/filter-data" method="GET">
@@ -42,7 +42,7 @@
                         </form>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
             <!-- Sidebar Toggle (Topbar) -->
             <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -52,19 +52,28 @@
 
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
-                <div class="topbar-divider d-none d-sm-block"></div>
+             
 
                 <!-- Nav Item - User Information -->
                 <li class="nav-item dropdown no-arrow">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::check() ? Auth::user()->name : 'Guest' }}</span>
-                        <img class="img-profile rounded-circle" src="{{ asset('images/Zuxxy.jpg') }}">
+                        @if (Auth::check())
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
+                            
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                                ({{ implode(', ',Auth::user()->getRoleNames()->toArray()) }})
+                            </span>
+                        @else
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small">Guest</span>
+                        @endif
+
+                        <img class="img-profile rounded-circle" src="{{ asset('images/' . Auth::user()->image) }}">
                     </a>
                     <!-- Dropdown - User Information -->
                     <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                         aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="#">
+                        <a class="dropdown-item" href="/profile">
                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                             Profile
                         </a>
@@ -111,4 +120,3 @@
                 });
             </script>
         </nav>
-     

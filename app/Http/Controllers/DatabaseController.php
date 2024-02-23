@@ -13,12 +13,13 @@ class DatabaseController extends Controller
     {
         $dropdown['NAMA_CUSTOMER'] = Database::select('NAMA_CUSTOMER')->distinct()->pluck('NAMA_CUSTOMER', 'NAMA_CUSTOMER');
         // ini buat custom si user mau berapa row yang ditampilin
-        $perPage = $request->input('per_page', 6);
+        $perPage = $request->input('per_page');
         // ini paginasi ngambil dari atas
         $data = Database::paginate($perPage);
         return view('database.index', compact('data'), [
             'dropdown' => $dropdown,
             "title" => "Home",
+            'request' => $request,
         ]);
     }
 
@@ -28,6 +29,7 @@ class DatabaseController extends Controller
         $start_date = $request->start_date;
         $end_date = $request->end_date;
         $customer_name = $request->customer_name;
+        $perPage = $request->input('per_page', 10);
 
         // Ambil data dropdown langsung di sini
         $dropdown['NAMA_CUSTOMER'] = Database::select('NAMA_CUSTOMER')->distinct()->pluck('NAMA_CUSTOMER', 'NAMA_CUSTOMER');
@@ -46,14 +48,18 @@ class DatabaseController extends Controller
             $query->where('NAMA_CUSTOMER', 'LIKE', '%' . $customer_name . '%');
         }
 
-        $data = $query->paginate(6);
+        // Tambahkan $perPage di dalam metode paginate
+        $data = $query->paginate($perPage);
 
         return view('database.index', [
             'data' => $data,
             'dropdown' => $dropdown,
             'title' => 'Data Terfilter',
+            'perPage' => $perPage,
         ]);
     }
+
+
 
 
 

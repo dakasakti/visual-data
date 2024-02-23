@@ -2,59 +2,55 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Http\RedirectResponse;
+use App\Models\UserNew;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display the user's profile form.
-     */
-    public function edit(Request $request): View
+    public function profile()
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
+        return view('layouts.profile', [
+            'title' => 'Profile'
         ]);
     }
 
-    /**
-     * Update the user's profile information.
-     */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update_profile(Request $request)
     {
-        $request->user()->fill($request->validated());
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        //cari id user siapa yang mau ganti photo/ email/ nama
+        $user_id = Auth::user()->id;
+        $user = UserNew::find($user_id);
+
+        $request->validate([
+            'images' => 'mimes:png,jpg,jpeg,svg',
+            'email' => 'unique:users,email,' . $user_id,
+        ]);
+
+
+        if ($request->filled('name')) {
+            $user->name = $request->name;
         }
 
-        $request->user()->save();
+        if ($request->filled('email')) {
+            $user->email = $request->email;
+        }
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
-    }
+        //kalo user mau ganti photo if ini bakal jalan
 
-    /**
-     * Delete the user's account.
-     */
-    public function destroy(Request $request): RedirectResponse
-    {
-        $request->validateWithBag('userDeletion', [
-            'password' => ['required', 'current_password'],
-        ]);
+        //bikin dulu nama defaultnya misalnya image
+        if ($request->hasFile('images')) {
+            //user udah  request nih otomatis namanya bakal default yang udah dikasih diatas
+            $images = $request->file('images');
+            // bikin variabel baru buat ganti nama image defaultnya (biar ga error kalo semuanya namanya sama) -> namanya diganti sesuai nama photo id usernya
+            $ubah_nama_image = 'profile_image_' . $user_id . '.' . $images->getClientOriginalExtension();
+            //image ini udah ada di folder public buat nyimpen semua foto
+            $images->move(public_path('images'), $ubah_nama_image);
+            $user->image = $ubah_nama_image;
+        }
 
-        $user = $request->user();
+        $user->save();
 
-        Auth::logout();
-
-        $user->delete();
-
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
-
-        return Redirect::to('/');
+        return redirect('/profile')->with('success', 'Profile berhasil diupdate');
     }
 }

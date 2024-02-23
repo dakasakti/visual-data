@@ -3,38 +3,78 @@
 @include('modal.importmodal')
 @include('modal.exportmodal')
 
+<style>
+    table.table-hover tbody tr:hover {
+        background-color: #f5f5f5;
+    }
+
+    th,
+    td {
+        text-align: center;
+    }
+
+    .btn-action {
+        margin-right: 5px;
+    }
+
+    .table-custom {
+        border-radius: 13px;
+        overflow: hidden;
+    }
+    .card-custom {
+        border-radius: 20px;
+        overflow: hidden;
+    }
+    .hide-row {
+        display: none;
+    }
+
+    .show-row {
+        display: table-row;
+    }
+</style>
 
 
-<div class="container-fluid">
-    <h1 class="h3 mb-2 text-gray-800"><i class="fas fa-fw fa-chart-area"></i> Charts</h1>
-    <div class="col-auto mb-4 form-inline d-flex justify-content-between">
-        <div>
-            <a href="{{ url('/tambahdata') }}" class="btn btn-success">New</a>
+<div class="container-fluid ">
+
+    @if (Session::has('bisalogin'))
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ Session::get('bisalogin') }}
         </div>
+    @endif
+    @if (Session::has('guest'))
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{ Session::get('guest') }}
+        </div>
+    @endif
+
+    <div class="col-auto mb-4 form-inline d-flex justify-content-between">
+
         <div class="form-inline">
             <button type="button" class="btn btn-primary" data-bs-target="#exportmodal" data-bs-toggle="modal"><i
                     class="fa-solid fa-file-export"></i> Export Excel</button>
-            <button type="button" class="btn btn-outline-secondary ml-4" data-bs-toggle="modal"
-                data-bs-target="#exampleModal"><i class="fa-solid fa-file-import"></i> Import Excel</button>
+            @if (auth()->user()->hasRole('admin'))
+                <button type="button" class="btn btn-outline-secondary ml-4" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"><i class="fa-solid fa-file-import"></i> Import Excel</button>
+            @endif
         </div>
     </div>
 
-    <div class="card shadow mb-4 float-end">
-        <div class="card-header py-3  " >
-            <h6 class="m-0 font-weight-bold text-primary">DataTables</h6>
-            <!-- resources/views/nama_view.blade.php -->
-
+    <div class="card shadow mb-4 float-end card-custom">
+        <div class="card-header py-3  ">
             <form id="perPageForm">
                 <div class="col-1">
-                    <label for="per_page">Show entries:</label>
-                    <select id="per_page" name="per_page" class="form-select">
+                    <select id="per_page" class="form-select">
                         <option value="5">5</option>
                         <option value="10">10</option>
                         <option value="20">20</option>
+                        <option value="51">50</option>
+                        <option value="101">100</option>
                     </select>
                 </div>
             </form>
-
 
         </div>
         @if (Session::has('success'))
@@ -57,14 +97,12 @@
                 {{ Session::get('gagaleksport') }}
             </div>
         @endif
-        {{-- <div class="card-body">
+
+        <!---start filter--->
+        <div class="card-body">
             <div class="row">
                 <div class="col-md-6">
                     <form action="/filter-data" method="GET">
-                        <div class="text-center">
-                            <h5>Filter Pencarian</h5>
-                        </div>
-
                         <div class="form-inline">
                             <div class="col-auto">
                                 <label for="start_date">Tanggal mulai : </label>
@@ -90,42 +128,44 @@
                                 @endif
                             </div>
                             <div class="col-auto mt-4">
-                                <button type="submit" class="btn btn-outline-primary""><i class="fa-solid fa-filter"></i> Filter</button>
+                                <button type="submit" class="btn btn-outline-primary"><i
+                                        class="fa-solid fa-filter"></i> Filter</button>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
-        </div> --}}
-
-
+        </div>
+        <!---end filter--->
 
         <div class="container-fluid mt-3">
             <div class="table-responsive">
-                <table class="table " id="example" width="100%" cellspacing="0">
+                <table class="table table-striped table-hover table-custom" id="example" width="100%"
+                    cellspacing="0">
                     <thead class="thead-dark">
                         <tr>
-                            <th scope="row">No</th>
-                            <th scope="row">Tanggal</th>
-                            <th scope="row">ORG CODE</th>
-                            <th scope="row">NAMA CUSTOMER</th>
-                            <th scope="row">KODE PRODUK</th>
-                            <th scope="row">AMMOUNT</th>
-                            <th scope="row">HARGA JUAL</th>
-                            <th scope="row">TRX</th>
-                            <th scope="row">TYPE MITRA</th>
-                            <th scope="row">AMMOUNT FIX</th>
-                            <th scope="row">PRODUK FIX</th>
-                            <th scope="row">BUCKET NAME</th>
-                            <th scope="row">Type Produk</th>
-                            <th scope="row">TYPE BISNIS</th>
-                            <th scope="row">REV INPPN</th>
+                            <th scope="col">#</th>
+                            <th scope="col">Tanggal</th>
+                            <th scope="col">ORG CODE</th>
+                            <th scope="col">NAMA CUSTOMER</th>
+                            <th scope="col">KODE PRODUK</th>
+                            <th scope="col">AMMOUNT</th>
+                            <th scope="col">HARGA JUAL</th>
+                            <th scope="col">TRX</th>
+                            <th scope="col">TYPE MITRA</th>
+                            <th scope="col">AMMOUNT FIX</th>
+                            <th scope="col">PRODUK FIX</th>
+                            <th scope="col">BUCKET NAME</th>
+                            <th scope="col">Type Produk</th>
+                            <th scope="col">TYPE BISNIS</th>
+                            <th scope="col">REV INPPN</th>
                             <th width="180px">Action</th>
                         </tr>
-                    <tbody class="table-group-divider">
-                        @foreach ($data as $item)
+                    </thead>
+                    <tbody>
+                        @foreach ($data as $index => $item)
                             <tr>
-                                <td>{{ $item->id }}</td>
+                                <td>{{ $index + 1 }}</td>
                                 <td>{{ \Carbon\Carbon::parse($item->Tanggal)->format('d/m/Y') }}</td>
                                 <td>{{ $item->ORG_CODE }}</td>
                                 <td>{{ $item->NAMA_CUSTOMER }}</td>
@@ -140,22 +180,26 @@
                                 <td>{{ $item->Type_Produk }}</td>
                                 <td>{{ $item->TYPE_BISNIS }}</td>
                                 <td>{{ $item->REV_INPPN }}</td>
-
                                 <td class="mt-2 justify-content-center">
-                                    <a href="/tampilkandata/{{ $item->id }}"><i
-                                            class="fa-solid fa-pen-to-square"></i>|</a>
-                                    <a href="{{ route('delete', ['id' => $item->id]) }}"
-                                        class="fa-solid fa-trash delete" data-id="{{ $item->id }}"
-                                        data-nama="{{ $item->NAMA_CUSTOMER }}" style="color: red"> |</a>
+                                    @if (auth()->user()->hasRole('admin'))
+                                        <a href="/tampilkandata/{{ $item->id }}"
+                                            class="btn btn-primary btn-action">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                        <a href="#" class="btn btn-danger btn-action delete"
+                                            data-id="{{ $item->id }}" data-nama="{{ $item->NAMA_CUSTOMER }}">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </a>
+                                    @endif
 
-
-                                    <a class="fa-solid fa-eye view-detail" data-bs-target="#modal-detail"
+                                    <button class="btn btn-info btn-action view-detail" data-bs-target="#modal-detail"
                                         data-bs-toggle="modal" data-id="{{ $item->id }}"
                                         data-Tanggal="{{ \Carbon\Carbon::parse($item->Tanggal)->format('d/m/Y') }}"
                                         data-org="{{ $item->ORG_CODE }}" data-kode="{{ $item->KODE_PRODUK }}"
                                         data-ammount="{{ $item->AMMOUNT }}" data-nama="{{ $item->NAMA_CUSTOMER }}"
                                         data-harga="{{ $item->HARGA_JUAL }}" data-trx="{{ $item->TRX }}"
-                                        data-typem="{{ $item->TYPE_MITRA }}" data-ammountf="{{ $item->AMMOUNT_FIX }}"
+                                        data-typem="{{ $item->TYPE_MITRA }}"
+                                        data-ammountf="{{ $item->AMMOUNT_FIX }}"
                                         data-produk="{{ $item->PRODUK_FIX }}" data-bucket="{{ $item->BUCKET_NAME }}"
                                         data-typep="{{ $item->Type_Produk }}" data-typeb="{{ $item->TYPE_BISNIS }}"
                                         data-revin="{{ $item->REV_INPPN }}" data-pajak="{{ $item->PAJAK }}"
@@ -164,57 +208,86 @@
                                         data-the="{{ $item->TOTAL_HPP_EXPPN }}"
                                         data-margini="{{ $item->Margin_INPPN }}"
                                         data-margine="{{ $item->Margin_EXPPN }}" data-hari="{{ $item->Hari }}"
-                                        data-bulan="{{ $item->Bulan }}" data-ketprod="{{ $item->KET_PROD }}"> </a>
+                                        data-bulan="{{ $item->Bulan }}" data-ketprod="{{ $item->KET_PROD }}">
+                                        <i class="fa-solid fa-eye"></i>
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach
                     </tbody>
-                    </thead>
                 </table>
             </div>
         </div>
         <div class="d-flex mt-3 justify-content-center">
-            {{ $data->links() }}
+            {{ $data->appends(['per_page' => $request->per_page])->links() }}
         </div>
+        
         <div class="d-flex mt-3 justify-content-center pb-2">
             showing {{ $data->firstItem() }} to {{ $data->lastItem() }} of {{ $data->total() }} entries
         </div>
-
     </div>
     @include('layouts.footer')
-</div>
-
-
-@foreach ($data as $item)
-    @include('modal.detailmodal', ['data' => $item])
-@endforeach
 
 
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.3/dist/sweetalert2.all.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.7.1.slim.js"
-    integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
-<script>
-    $('.delete').click(function() {
-        var id = $(this).attr('data-id');
-        var nama = $(this).attr('data-nama');
 
-        swal({
-                title: "Yakin?",
-                text: "Ingin menghapus data dengan nama customer : " + nama + " ",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            })
-            .then((willDelete) => {
-                if (willDelete) {
-                    window.location = "/delete/" + id + "",
+    @foreach ($data as $item)
+        @include('modal.detailmodal', ['data' => $item])
+    @endforeach
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.3/dist/sweetalert2.all.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.js"
+        integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>
+    <script>
+        $('.delete').click(function() {
+            var databaseid = $(this).attr('data-id');
+            var nama = $(this).attr('data-nama');
+
+            swal({
+                    title: "Yakin?",
+                    text: "Ingin menghapus data dengan nama customer : " + nama + " dengan id " + databaseid +
+                        "",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        window.location = "/delete/" + databaseid + ""
                         swal("Data berhasil dihapus", {
                             icon: "success",
                         });
-                } else {
-                    swal("Data tidak dihapus");
+                    } else {
+                        swal("Data tidak dihapus");
+                    }
+                });
+
+
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    
+
+<script>
+$(document).ready(function () {
+    $('#per_page').on('change', function () {
+        var perPageValue = parseInt($(this).val());
+        $('.table-custom tbody tr').removeClass('hide-row');
+
+        if (perPageValue > 0) {
+            var rows = $('.table-custom tbody tr');
+            var totalRows = rows.length;
+
+            rows.each(function (index) {
+                if (index >= perPageValue) {
+                    $(this).addClass('hide-row');
                 }
             });
+        }
     });
+});
 </script>
+
