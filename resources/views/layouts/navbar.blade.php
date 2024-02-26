@@ -9,8 +9,8 @@
                 <div class="row">
                     <div class="col-md-6">
                         <form action="/filter-data" method="GET">
-                      
-    
+
+
                             <div class="form-inline">
                                 <div class="col-auto">
                                     <label for="start_date">Tanggal mulai : </label>
@@ -52,7 +52,7 @@
 
             <!-- Topbar Navbar -->
             <ul class="navbar-nav ml-auto">
-             
+
 
                 <!-- Nav Item - User Information -->
                 <li class="nav-item dropdown no-arrow">
@@ -60,7 +60,7 @@
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         @if (Auth::check())
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ Auth::user()->name }}</span>
-                            
+
                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">
                                 ({{ implode(', ',Auth::user()->getRoleNames()->toArray()) }})
                             </span>

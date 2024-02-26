@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Database; 
 
-class NamaController extends Controller
+use App\Models\Database;
+
+class RecordController extends Controller
 {
     public function updateTanggal($id)
     {
@@ -23,4 +24,3 @@ class NamaController extends Controller
         }
     }
 }
-

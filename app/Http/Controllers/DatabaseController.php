@@ -16,13 +16,17 @@ class DatabaseController extends Controller
         $perPage = $request->input('per_page');
         // ini paginasi ngambil dari atas
         $data = Database::paginate($perPage);
+
+        $user = $request->user();
+        $imageProfile = $user->image ?? 'https://placehold.co/300x300/png';
+
         return view('database.index', compact('data'), [
             'dropdown' => $dropdown,
             "title" => "Home",
             'request' => $request,
+            'imageProfile' => $imageProfile
         ]);
     }
-
 
     public function filter(Request $request)
     {
@@ -59,14 +63,10 @@ class DatabaseController extends Controller
         ]);
     }
 
-
-
-
-
     public function delete($id)
     {
         $data = Database::find($id);
-        if ($data != null) {
+        if (!$data) {
             $data->delete();
             return redirect()->route('database')->with('success', 'Data berhasil dihapus');
         }
@@ -81,7 +81,6 @@ class DatabaseController extends Controller
 
     public function show($id)
     {
-        $data = Database::find($id);
-        return $data;
+        return Database::find($id);
     }
 }
